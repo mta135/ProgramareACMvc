@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using ProgramareAC.Services.MPASS
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,6 +21,13 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+
+
+
+    @{
+        string loginType = Session.GetLoginTypeKey();
+    }
+
 
 </head>
 <body>
@@ -44,27 +54,33 @@
                 </button>
             </div>
 
-            <div class="navbar-collapse collapse">
+            @if (!string.IsNullOrEmpty(loginType))
+            {
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav" style="margin-left:-30px">
 
-                        <li>
-                            <a href="@Url.Action("Appointment", "PriorAppointment")"><b>Programarea prealabilă</b></a>
-                        </li>
-                        <li>
-                            <a href="~/Ghidul utilizatorului.pdf" target="_blank"><b>Ghidul utilizatorului</b></a>
-                        </li>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav" style="margin-left:-30px">
 
-                        <li>
-                            <a href="@Url.Action("CheckStatuses", "CheckAppointmentStatus")" target="_blank"><b>Verifica statulul</b></a>
-                        </li>
+                            <li>
+                                <a href="@Url.Action("Appointment", "PriorAppointment")"><b>Programarea prealabilă</b></a>
+                            </li>
+                            <li>
+                                <a href="~/Ghidul utilizatorului.pdf" target="_blank"><b>Ghidul utilizatorului</b></a>
+                            </li>
 
-                        <li>
-                            <a href="@Url.Action("Logout din MPASS", "Authentication")"><b>MPASS Logut</b></a>
-                        </li>
-                    </ul>
+                            <li>
+                                <a href="@Url.Action("CheckStatuses", "CheckAppointmentStatus")" target="_blank"><b>Verifica statulul</b></a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("Logout din MPASS", "Authentication")"><b>MPASS Logut</b></a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
-            </div>
+            }
+
         </div>
     </div>
 
