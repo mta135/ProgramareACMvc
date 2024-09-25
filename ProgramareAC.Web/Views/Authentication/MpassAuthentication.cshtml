@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Autentificare prin MPASS";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <img src="~/Content/img/mpass.png" alt="mpass" />
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("MPASSLogin", "Authentication")'">Autentificare prin MPASS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
