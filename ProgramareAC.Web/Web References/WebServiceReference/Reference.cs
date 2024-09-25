@@ -13,7 +13,7 @@
 // 
 #pragma warning disable 1591
 
-namespace ProgramareAC.Web.ServiceReference {
+namespace ProgramareAC.Web.WebServiceReference {
     using System;
     using System.Web.Services;
     using System.Diagnostics;
