@@ -14,17 +14,22 @@ using System.Web.Mvc;
 
 namespace ProgramareAC.Web.Controllers
 {
+    [Authorize]
     public class PriorAppointmentController : Controller
     {
         readonly ServiceReference.WSO2_package_017ACPortTypeClient client;
 
-        private readonly IMSignCommunicationService mSignCommunicationService;
+        private readonly IMSignCommunicationService _mSignCommunicationService;
 
-        private IAppointmentRepository _appointmentRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
 
-        public PriorAppointmentController()
+        public PriorAppointmentController(IAppointmentRepository appointmentRepository)
         {
             client = new ServiceReference.WSO2_package_017ACPortTypeClient("SOAP11Endpoint");
+
+            _mSignCommunicationService = new MSignCommunicationService();
+
+            _appointmentRepository = appointmentRepository;
         }
         
             
@@ -68,7 +73,7 @@ namespace ProgramareAC.Web.Controllers
             ViewBag.ReturnUrl = string.Format("{0}/{2}/{1}", RequestBaseUrl(), "MSignDocumentResponse", "PriorAppointment");
             ViewBag.URLBrowser = ConfigurationManager.AppSettings["MSign_UrlBrowser"];
 
-            string msingRequestId = mSignCommunicationService.SendMSignDocumentRequest(form1);
+            string msingRequestId = _mSignCommunicationService.SendMSignDocumentRequest(form1);
 
             ViewBag.RequestID = msingRequestId;
 
@@ -81,7 +86,7 @@ namespace ProgramareAC.Web.Controllers
         {
             string view;
 
-            int mSingAcceptedResult = mSignCommunicationService.MSignRequestCheckAndAccepted(requestID);
+            int mSingAcceptedResult = _mSignCommunicationService.MSignRequestCheckAndAccepted(requestID);
 
             ResponseResultPack responseResult = new ResponseResultPack();
 
@@ -128,7 +133,7 @@ namespace ProgramareAC.Web.Controllers
         public JsonResult VerifyMSignSignature(string requestId)
         {
             //            string requestId = "bf02e8ff8d9b4c6f99d5b1e00073a837";
-            SignValidationResult result = mSignCommunicationService.VerifyMSignSignature(requestId);
+            SignValidationResult result = _mSignCommunicationService.VerifyMSignSignature(requestId);
 
             return Json(result, JsonRequestBehavior.AllowGet);
 
