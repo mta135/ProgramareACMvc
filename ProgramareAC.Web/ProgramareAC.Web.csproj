@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.17.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.17\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -137,6 +140,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\MPASS\CertificatesProvider.cs" />
+    <Compile Include="Services\MPASS\MPASSConfiguration.cs" />
+    <Compile Include="Services\MPASS\ParseSamlUserData.cs" />
+    <Compile Include="Services\MPASS\SamlHelper.cs" />
+    <Compile Include="Services\MPASS\SessionExtension.cs" />
+    <Compile Include="Services\MPASS\XmlSigner.cs" />
     <Compile Include="Services\Msign\Client\MSignService.cs" />
     <Compile Include="Services\Msign\Model\SignPackSaveItem.cs" />
     <Compile Include="Services\Msign\Model\SignPackSaveModel.cs" />
@@ -206,6 +215,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Connected Services\ServiceReference\WSO2_package_017AC.wsdl" />
+    <Content Include="log4net.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

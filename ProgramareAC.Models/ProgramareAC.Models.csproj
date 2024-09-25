@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataBaseConnection\DataBaseAccesConfig.cs" />
+    <Compile Include="LogHelper\WriteLog.cs" />
     <Compile Include="Models\Appointment\AppointmentModel.cs" />
     <Compile Include="Models\Appointment\ResponseResultPack.cs" />
     <Compile Include="Models\Enums\SignStatusEnum.cs" />

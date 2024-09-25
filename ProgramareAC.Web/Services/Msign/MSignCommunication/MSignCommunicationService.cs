@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using ProgramareAC.DataAccess;
 using ProgramareAC.Models;
+using ProgramareAC.Models.LogHelper;
 using ProgramareAC.Models.Repositories.Abstract;
 using ProgramareAC.Models.Repositories.Real;
 
@@ -28,7 +29,8 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
         public string SendMSignDocumentRequest(AppointmentModel appointmentModel)
         {
 
-            try {
+            try
+            {
 
                 string resultRequestId = null;
 
@@ -40,13 +42,15 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
 
                 string correlationId = appointmentModel.Times.Split('|')[0];
 
-                SignRequest signRequest = new SignRequest {
+                SignRequest signRequest = new SignRequest
+                {
                     ShortContentDescription = "Programarea online la audienţa la aparatul central al CNAS",
                     ContentType = ContentType.Hash,
                     SignatureReason = "Programarea online la audienţa la aparatul central al CNAS. Confirmare pentru validitatea datelor",
                 };
 
-                SignContent signContent = new SignContent {
+                SignContent signContent = new SignContent
+                {
 
                     CorrelationID = correlationId, //Guid.NewGuid().ToString("N"),
                     MultipleSignatures = false,
@@ -72,9 +76,10 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
                 return resultRequestId;
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
-                //WriteLog.Common.Error("Method SendMSignDocumentRequest give an erorr: ", ex);
+                WriteLog.Common.Error("Method SendMSignDocumentRequest give an erorr: ", ex);
 
                 return null;
             }
@@ -89,7 +94,8 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
         {
             int msignResponseResult = -1;
 
-            try {
+            try
+            {
 
                 var client = MSignClientFactory.Create();
 
@@ -98,7 +104,8 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
                 int singResponseStatus = (int)signResponse.Status;
                 msignResponseResult = singResponseStatus;
 
-                if (singResponseStatus == (int)SignStatus.Success) {
+                if (singResponseStatus == (int)SignStatus.Success)
+                {
 
                     _mSignRepository.UpdateSignedDocument(requestID, singResponseStatus, signResponse.Message);
 
@@ -112,19 +119,20 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
                     _mSignRepository.SetSign(requestID, signItem.SignDate, signItem.SignerFullName, signItem.SignerIDNP, sign);
 
                 }
-                else {
+                else
+                {
                     _mSignRepository.UpdateSignedDocument(requestID, singResponseStatus, signResponse.Message);
 
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
-               // WriteLog.Common.Error("Method MsignCheckRequest give an error. MSIngRequestId: " + requestID + "; Exception: ", ex);
+                WriteLog.Common.Error("Method MsignCheckRequest give an error. MSIngRequestId: " + requestID + "; Exception: ", ex);
             }
 
             return msignResponseResult;
         }
-
 
         public SignValidationResult VerifyMSignSignature(string requestId)
         {
@@ -143,12 +151,14 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
             result.Signer = xades.SubjectName;
             result.SignDate = xades.SignTimeStamp;
 
-            try {
+            try
+            {
 
                 IMSign client = MSignClientFactory.Create();
 
-                VerificationContent verificationContent = new VerificationContent {
-                    
+                VerificationContent verificationContent = new VerificationContent
+                {
+
                     CorrelationID = correlationId,
                     Content = hash,
                     Signature = sign
@@ -157,7 +167,8 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
                 VerificationContent[] contentsField = new VerificationContent[1];
                 contentsField[0] = verificationContent;
 
-                VerificationRequest verificationRequest = new VerificationRequest {
+                VerificationRequest verificationRequest = new VerificationRequest
+                {
 
                     Contents = contentsField,
                     SignedContentType = ContentType.Hash
@@ -171,12 +182,14 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
 
                 result.Message = verificationResult.Message;
 
-                if (verificationResult.SignaturesValid) {
+                if (verificationResult.SignaturesValid)
+                {
                     var firstCertificate = verificationResult.Certificates.FirstOrDefault();
                     var SignedAt = firstCertificate.SignedAt;
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
                 // log exception error
                 result.Status = SignValidationStatus.ValidationError;
@@ -185,10 +198,10 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
             return result;
         }
 
-
         private static byte[] CreateSha1Hash(string input)
         {
-            using (SHA1 sha1 = SHA1.Create()) {
+            using (SHA1 sha1 = SHA1.Create())
+            {
 
                 byte[] inputBytes = Encoding.UTF8.GetBytes(input);
                 return sha1.ComputeHash(inputBytes);
