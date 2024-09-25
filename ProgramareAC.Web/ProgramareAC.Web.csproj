@@ -138,6 +138,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Services\Msign\Client\MSignService.cs" />
+    <Compile Include="Services\Msign\Model\SignPackSaveItem.cs" />
+    <Compile Include="Services\Msign\Model\SignPackSaveModel.cs" />
+    <Compile Include="Services\Msign\Model\SignValidationResult.cs" />
+    <Compile Include="Services\Msign\Model\XAdES.cs" />
+    <Compile Include="Services\Msign\MSignClient.cs" />
+    <Compile Include="Services\Msign\MSignCommunication\IMSignCommunicationService.cs" />
+    <Compile Include="Services\Msign\MSignCommunication\MSignCommunicationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ServiceReference\configuration91.svcinfo" />
