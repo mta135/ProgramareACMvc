@@ -10,148 +10,256 @@
 
 
 
-<div>
-    @using (Html.BeginForm())
-    {
+
+@using (Html.BeginForm())
+{
 
 
-        <div class="row">
+    <div class="row">
 
 
-            <div class="col-sm-8">
+        <div class="col-sm-8">
 
-                <div class="row">
-                    <label class="col-sm-3">AC CNAS</label>
-                    <div class="col-sm-9">
-                        @Html.DropDownListFor(x => x.Select1, Model.AcCnas, "Selectați", new { @class = "form-control", @id = "Select1" })
-                        <span class="field-validation-valid" data-valmsg-for="Select1" data-valmsg-replace="true"></span>
-                        <br />
-                    </div>
+            <div class="row">
+                <label class="col-sm-3">AC CNAS</label>
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(x => x.Select1, Model.AcCnas, "Selectați", new { @class = "form-control", @id = "Select1" })
+                    <span class="field-validation-valid" data-valmsg-for="Select1" data-valmsg-replace="true"></span>
+                    <br />
                 </div>
-
-
             </div>
 
-            <div class="col-sm-4">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <h4 class="text-center">Util</h4>
-                                <ul class="list-unstyled">
-                                    <li>
-                                        1. La completarea câmpului „Selectați AC CNAS” se va selecta funcția persoanei la care se solicită programarea în audiență..
-                                    </li>
-                                    <li>
-                                        <br />
-                                        2. Câmpul „Telefon” urmează a fi completat în mod obligatoriu, în scopul contactării solicitantului de audiență în cazul survenirii unor circumstanțe neprevăzute în procesul de organizare a audienței.
-                                        Numărul de telefon poate fi atît de telefonie mobilă cît și telefonie fixă.
-                                    </li>
-                                    <li>
-                                        <br />
-                                        3. La completarea câmpului „Subiectul audienței” se va indica succint problema ce urmează a fi abordată în cadrul audienței.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
+            <div class="row">
+                <label class="col-sm-3">Tipul serviciului:</label>
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(x => x.Service, Model.TipulServiciului, new { @class = "form-control", @id = "Service" })
+                    @Html.ValidationMessageFor(x => x.Service)
+                    <br />
                 </div>
-
             </div>
-        </div>
+
+            <div class="row">
+                <label class="col-sm-3">Data nașterii:</label>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @id = "date", placeholder = "Data nasterii solicitantului (DD-MM-YYYY)", @onchange = "ValidateBirthDate()" })
+                    <span class="field-validation-valid" data-valmsg-for="Date" data-valmsg-replace="true"></span>
+                    <br />
+                </div>
+            </div>
+
+            <div class="row">
+                <label class="col-sm-3">IDNP :</label>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(x => x.IDNP, new { @class = "form-control", autocomplete = "off", placeholder = "IDNP-ul solicitantului" })
+                    @Html.ValidationMessageFor(x => x.IDNP)
+                    <br />
+                </div>
+            </div>
+
+            <div class="row">
+                <label class="col-sm-3">Nume :</label>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", autocomplete = "off", placeholder = "Nume solicitantului" })
+                    @Html.ValidationMessageFor(x => x.LastName)
+                    <br />
+                </div>
+            </div>
+
+            <div class="row">
+                <label class="col-sm-3">Prenume :</label>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", autocomplete = "off", placeholder = "Prenume solicitantului" })
+                    @Html.ValidationMessageFor(x => x.FirstName)
+                    <br />
+                </div>
+            </div>
 
 
-        @*<div class="form-group">
-                <label class="col-sm-4 col-xs-6 control-label" for="typectas" align="right">AC CNAS:</label>
-                @Html.DropDownListFor(x => x.Select1, Model.AcCnas, "Selectați", new { @class = "form-control", @id = "Select1", style = "height:32px" })
-                <span class="field-validation-valid" data-valmsg-for="Select1" data-valmsg-replace="true"></span>
-                <br />
+            <div class="row">
+                <label class="col-sm-3">E-mail :</label>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", autocomplete = "off", placeholder = "E-mail" })
+                    <br />
+                </div>
+            </div>
 
-                <label class="col-sm-4 col-xs-4 control-label" for="Service" align="right">Tipul serviciului:</label>
-                @Html.DropDownListFor(x => x.Service, Model.TipulServiciului, new { @class = "form-control", @id = "Service", style = "height:32px" })
-                @Html.ValidationMessageFor(x => x.Service)
-                <br />
-
-                <label class="col-sm-4 col-xs-4 control-label" for="Date" align="right">Data nașterii:</label>
-                @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @id = "date", style = "height:32px", placeholder = "Data nasterii solicitantului (DD-MM-YYYY)", @onchange = "ValidateBirthDate()" })
-                <span class="field-validation-valid" data-valmsg-for="Date" data-valmsg-replace="true"></span>
-                <br />
-
-                <label class="col-sm-4 col-xs-4 control-label" for="IDNP" align="right">IDNP :</label>
-                @Html.TextBoxFor(x => x.IDNP, new { @class = "form-control", autocomplete = "off", placeholder = "IDNP-ul solicitantului", style = "height:32px" })
-                @Html.ValidationMessageFor(x => x.IDNP)
-                <br />
-
-                <label class="col-sm-4  control-label" for="LastName" align="right">Nume:</label>
-                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", autocomplete = "off", placeholder = "Nume solicitantului", style = "height:32px" })
-                @Html.ValidationMessageFor(x => x.LastName)
-                <br />
-
-                <label class="col-sm-4  control-label" for="FirstName" align="right">Prenume:</label>
-                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", autocomplete = "off", placeholder = "Prenume solicitantului", style = "height:32px" })
-                @Html.ValidationMessageFor(x => x.FirstName)
-                <br />
-
-                <label class="col-sm-4  control-label" for="FirstName" align="right">E-mail:</label>
-                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", autocomplete = "off", placeholder = "E-mail", style = "height:32px" })
-                <br />
-
-                <label class="col-sm-4  control-label" for="FirstName" align="right">Telefon:</label>
-                @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @id = "phone", autocomplete = "off", placeholder = "Nr.de telefon", style = "height:32px" })
-                @Html.ValidationMessageFor(x => x.Phone)
-                <br />
-
-                <label class="col-sm-4  control-label" for="FirstName" align="right">Subiectul audientiei:</label>
-                @Html.TextAreaFor(x => x.AudienceSubject, 3, 10, new { @class = "form-control", autocomplete = "off", placeholder = "Subiectul audientiei" })
-                @Html.ValidationMessageFor(x => x.AudienceSubject)
+            <div class="row">
+                <label class="col-sm-3">Telefon :</label>
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @id = "phone", autocomplete = "off", placeholder = "Nr.de telefon" })
+                    @Html.ValidationMessageFor(x => x.Phone)
+                    <br />
+                </div>
+            </div>
 
 
-                <div class="checkbox checkbox-success">
+            <div class="row">
+                <label class="col-sm-3">Subiectul audientiei :</label>
+                <div class="col-sm-9">
+                    @Html.TextAreaFor(x => x.AudienceSubject, 3, 10, new { @class = "form-control", autocomplete = "off", placeholder = "Subiectul audientiei" })
+                    @Html.ValidationMessageFor(x => x.AudienceSubject)
+                    <br />
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-1">
                     <input id="CorrectData" type="checkbox" name="CorrectData" data-val="true" data-val-required="required" required>
+                </div>
+                <div class="col-sm-11">
                     <label for="CorrectData">
                         Am verificat datele introduse şi confirm corectitudinea lor pe propria răspundere.
                     </label>
                 </div>
+            </div>
 
-                @Html.ValidationMessage("CorrectData", "Acest cîmp este obligator.")
-                <div class="checkbox checkbox-success">
+            <div class="row">
+                <div class="col-sm-1">
                     <input id="LegalAccept" type="checkbox" name="LegalAcept" required>
+                </div>
+                <div class="col-sm-11">
                     <label for="LegalAccept">
                         Cunosc prevederile legislaţiei în domeniul protecţiei datelor cu caracter personal şi accept prelucrarea datelor personale.
                     </label>
                 </div>
-                @Html.ValidationMessage("LegalAcept", "Acest cîmp este obligator.")
+            </div>
+            <br />
 
-
-                <label class="col-sm-4 col-xs-4 control-label" for="type" align="right">   </label>
-                <div class="col-sm-8 ">
-                    <input class="btn btn_important" id="Button1" type="button" value="Alege data și ora" />
+            <div class="row">
+                <div class="col-sm-3">
+                    <input class="btn btn-default" id="Button1" type="button" value="Alege data și ora" />
                 </div>
-
-                <label class="col-sm-4 col-xs-4  control-label" for="type" align="right">Data și ora disponibilă:</label>
-                <div class="col-sm-8 col-xs-10">
+                <div class="col-sm-9">
                     <select id="Times" class="form-control" name="Times" style="height:32px" data-val="true" data-val-required="Alege data și ora">
                         <option value="" selected>Alege data și ora disponibilă</option>
                     </select>
                     <span class="field-validation-valid" data-valmsg-for="Times" data-valmsg-replace="true"></span>
                     <br />
                 </div>
-            </div>*@
-        <br />
-
-
-
-
-        @*<label class="col-sm-4 col-xs-4 control-label" for="type" align="right">   </label>
-            <div class="col-sm-8 ">
-                <br /> <button class="btn btn_lg btn_important" type="submit">Aplică</button>
             </div>
-            <br />*@
 
-    }
+        </div>
 
-</div>
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h4 class="text-center">Util</h4>
+                            <ul class="list-unstyled">
+                                <li>
+                                    1. La completarea câmpului „Selectați AC CNAS” se va selecta funcția persoanei la care se solicită programarea în audiență..
+                                </li>
+                                <li>
+                                    <br />
+                                    2. Câmpul „Telefon” urmează a fi completat în mod obligatoriu, în scopul contactării solicitantului de audiență în cazul survenirii unor circumstanțe neprevăzute în procesul de organizare a audienței.
+                                    Numărul de telefon poate fi atît de telefonie mobilă cît și telefonie fixă.
+                                </li>
+                                <li>
+                                    <br />
+                                    3. La completarea câmpului „Subiectul audienței” se va indica succint problema ce urmează a fi abordată în cadrul audienței.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    @*<div class="form-group">
+            <label class="col-sm-4 col-xs-6 control-label" for="typectas" align="right">AC CNAS:</label>
+            @Html.DropDownListFor(x => x.Select1, Model.AcCnas, "Selectați", new { @class = "form-control", @id = "Select1", style = "height:32px" })
+            <span class="field-validation-valid" data-valmsg-for="Select1" data-valmsg-replace="true"></span>
+            <br />
+
+            <label class="col-sm-4 col-xs-4 control-label" for="Service" align="right">Tipul serviciului:</label>
+            @Html.DropDownListFor(x => x.Service, Model.TipulServiciului, new { @class = "form-control", @id = "Service", style = "height:32px" })
+            @Html.ValidationMessageFor(x => x.Service)
+            <br />
+
+            <label class="col-sm-4 col-xs-4 control-label" for="Date" align="right">Data nașterii:</label>
+            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @id = "date", style = "height:32px", placeholder = "Data nasterii solicitantului (DD-MM-YYYY)", @onchange = "ValidateBirthDate()" })
+            <span class="field-validation-valid" data-valmsg-for="Date" data-valmsg-replace="true"></span>
+            <br />
+
+            <label class="col-sm-4 col-xs-4 control-label" for="IDNP" align="right">IDNP :</label>
+            @Html.TextBoxFor(x => x.IDNP, new { @class = "form-control", autocomplete = "off", placeholder = "IDNP-ul solicitantului", style = "height:32px" })
+            @Html.ValidationMessageFor(x => x.IDNP)
+            <br />
+
+            <label class="col-sm-4  control-label" for="LastName" align="right">Nume:</label>
+            @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", autocomplete = "off", placeholder = "Nume solicitantului", style = "height:32px" })
+            @Html.ValidationMessageFor(x => x.LastName)
+            <br />
+
+            <label class="col-sm-4  control-label" for="FirstName" align="right">Prenume:</label>
+            @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", autocomplete = "off", placeholder = "Prenume solicitantului", style = "height:32px" })
+            @Html.ValidationMessageFor(x => x.FirstName)
+            <br />
+
+            <label class="col-sm-4  control-label" for="FirstName" align="right">E-mail:</label>
+            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", autocomplete = "off", placeholder = "E-mail", style = "height:32px" })
+            <br />
+
+            <label class="col-sm-4  control-label" for="FirstName" align="right">Telefon:</label>
+            @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @id = "phone", autocomplete = "off", placeholder = "Nr.de telefon", style = "height:32px" })
+            @Html.ValidationMessageFor(x => x.Phone)
+            <br />
+
+            <label class="col-sm-4  control-label" for="FirstName" align="right">Subiectul audientiei:</label>
+            @Html.TextAreaFor(x => x.AudienceSubject, 3, 10, new { @class = "form-control", autocomplete = "off", placeholder = "Subiectul audientiei" })
+            @Html.ValidationMessageFor(x => x.AudienceSubject)
+
+
+            <div class="checkbox checkbox-success">
+                <input id="CorrectData" type="checkbox" name="CorrectData" data-val="true" data-val-required="required" required>
+                <label for="CorrectData">
+                    Am verificat datele introduse şi confirm corectitudinea lor pe propria răspundere.
+                </label>
+            </div>
+
+            @Html.ValidationMessage("CorrectData", "Acest cîmp este obligator.")
+            <div class="checkbox checkbox-success">
+                <input id="LegalAccept" type="checkbox" name="LegalAcept" required>
+                <label for="LegalAccept">
+                    Cunosc prevederile legislaţiei în domeniul protecţiei datelor cu caracter personal şi accept prelucrarea datelor personale.
+                </label>
+            </div>
+            @Html.ValidationMessage("LegalAcept", "Acest cîmp este obligator.")
+
+
+            <label class="col-sm-4 col-xs-4 control-label" for="type" align="right">   </label>
+            <div class="col-sm-8 ">
+                <input class="btn btn_important" id="Button1" type="button" value="Alege data și ora" />
+            </div>
+
+            <label class="col-sm-4 col-xs-4  control-label" for="type" align="right">Data și ora disponibilă:</label>
+            <div class="col-sm-8 col-xs-10">
+                <select id="Times" class="form-control" name="Times" style="height:32px" data-val="true" data-val-required="Alege data și ora">
+                    <option value="" selected>Alege data și ora disponibilă</option>
+                </select>
+                <span class="field-validation-valid" data-valmsg-for="Times" data-valmsg-replace="true"></span>
+                <br />
+            </div>
+        </div>*@
+    <br />
+
+
+
+
+    @*<label class="col-sm-4 col-xs-4 control-label" for="type" align="right">   </label>
+        <div class="col-sm-8 ">
+            <br /> <button class="btn btn_lg btn_important" type="submit">Aplică</button>
+        </div>
+        <br />*@
+
+}
+
 
 @*<div class="col-md-5 col-sm-12">
         <div class="section">
