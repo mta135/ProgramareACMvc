@@ -11,7 +11,8 @@ namespace ProgramareAC.Services.MSign.Model
         {
             Items = new List<SignPackSaveItem>();
 
-            foreach (SignResult msignResult in msignResults) {
+            foreach (SignResult msignResult in msignResults)
+            {
 
                 XAdES XAdESInfo = new XAdES(msignResult.Signature);
 

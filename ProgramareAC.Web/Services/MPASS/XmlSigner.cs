@@ -27,7 +27,8 @@ namespace ProgramareAC.Services.MPASS
             xmlDocument.LoadXml(xml);
             KeyInfo keyInfo = new KeyInfo();
             keyInfo.AddClause(new KeyInfoX509Data(x509Certificate));
-            SignedXml signedXml = new SignedXml(xmlDocument) {
+            SignedXml signedXml = new SignedXml(xmlDocument)
+            {
                 SigningKey = x509Certificate.GetRSAPrivateKey(),
                 KeyInfo = keyInfo
             };
@@ -47,7 +48,8 @@ namespace ProgramareAC.Services.MPASS
         {
             SignedXml signedXml = new SignedXml(document);
             XmlElement xmlElement = document.DocumentElement["Signature", "http://www.w3.org/2000/09/xmldsig#"];
-            if (xmlElement == null) {
+            if (xmlElement == null)
+            {
                 return false;
             }
 
@@ -58,7 +60,8 @@ namespace ProgramareAC.Services.MPASS
         private static string GetMessageId(XmlElement xmlElement)
         {
             string text = xmlElement.GetAttribute("ID").Trim();
-            if (string.IsNullOrEmpty(text)) {
+            if (string.IsNullOrEmpty(text))
+            {
                 throw new Exception("The message ID is missing.");
             }
 
@@ -68,7 +71,8 @@ namespace ProgramareAC.Services.MPASS
         public static void RemoveSignature(XmlElement xmlElement)
         {
             XmlElement signatureElement = GetSignatureElement(xmlElement);
-            if (signatureElement != null) {
+            if (signatureElement != null)
+            {
                 xmlElement.RemoveChild(signatureElement);
             }
         }
@@ -78,7 +82,8 @@ namespace ProgramareAC.Services.MPASS
             xml = xml.Replace("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>", string.Empty);
             xml = xml.Replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>", string.Empty);
             int num = xml.IndexOf(">");
-            if (num >= 0 && xml.IndexOf("<Signature") >= 0) {
+            if (num >= 0 && xml.IndexOf("<Signature") >= 0)
+            {
                 num++;
                 int num2 = xml.IndexOf("<Signature", num);
                 xml = xml.Substring(num, num2 - num);
