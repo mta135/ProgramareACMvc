@@ -1,0 +1,162 @@
+﻿@model ProgramareAC.Models.Models.Appointment.ResponseResultPack
+
+
+@{
+    ViewBag.Title = "Result";
+}
+
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+
+
+
+
+
+<h4>Rezultatul solicitării:</h4>
+<hr />
+<div class="row">
+    <div class="col-sm-12">
+        <img id="sing" src="~/Content/img/sign.png" />
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <br />
+        <table class="table table-hover table-bordered">
+            <tr>
+                <td style="width: 35%; font-weight:bold">
+                    IDNP :
+                </td>
+                <td>@ViewBag.IDNP</td>
+            </tr>
+            <tr>
+                <td style="width: 35%; font-weight:bold">
+                    Oficiul AC:
+                </td>
+                <td>
+                    @ViewBag.Select_2
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 35%; font-weight:bold">
+                    Data și ora:
+                </td>
+                <td>
+                    @ViewBag.Times2
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 35%; font-weight:bold">
+                    Serviciul:
+                </td>
+                <td>
+                    @ViewBag.Service2
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 35%; font-weight:bold">
+                    Numarul înregistrării:
+                </td>
+                <td>
+                    @ViewBag.Times1
+                </td>
+            </tr>
+        </table>
+        <h4>
+            Atenție!
+            Programarea este valabilă timp de 10 minute de la ora stabilită. În cazul în care, din anumite motive, ați întârziat – programarea se consideră nevalabilă. În acest caz, puteți beneficia de o nouă programare on-line.
+        </h4>
+    </div>
+</div>
+
+
+@***************************************  Validate Sign ********************@
+
+<div id="dialog" title="Verificare semnaturii">
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <img id="conditionalImage" src="~/Content/img/spinning-arrows-blue.gif" width="192" height="192">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <div class="col-md-12 text-center">Rezultat: <span id="MSignValidateResult"></span></div>
+        </div>
+    </div>
+</div>
+
+
+@*Validate sign*@
+<script>
+
+    $(function () {
+
+        $("#dialog").dialog({
+            autoOpen: false,
+            resizable: false,
+
+            width: 600,
+            height: 300,
+        });
+
+        $("#sing").click(function () {
+            $("#dialog").dialog('open');
+
+            ValidateSing();
+
+        });
+    });
+
+    function ValidateSing() {
+
+        $("#MSignValidateResult").text("");
+        MSignValidateImage(0);
+
+        var _requestId = '@(Model.MsRequestId)';
+
+        $.ajax({
+
+            type: "GET",
+            url: '@Url.Action("VerifyMSignSignature", "PriorAppointment")',
+            contentType: "application/json; charset=utf-8",
+            data: { requestId: _requestId },
+            dataType: "json",
+            success: function (data) {
+
+                $("#MSignValidateResult").text(data.Message);
+                MSignValidateImage(data.Status)
+            },
+            error: function (ex) {
+                console.log('Error');
+                console.log(ex.responseText);
+                alert("Error. Please contact IT.");
+            }
+        });
+    }
+
+    function MSignValidateImage(status) {
+
+        if (status == 0) {
+            document.getElementById("conditionalImage").src = "@Url.Content("~/Content/img/spinning-arrows-blue.gif")";
+        }
+
+        if (status == 1) {
+            document.getElementById("conditionalImage").src = "@Url.Content("~/Content/img/shield.png")";
+        }
+
+        if (status == 2) {
+            document.getElementById("conditionalImage").src = "@Url.Content("~/Content/img/broken-shield.png")";
+        }
+
+        if (status == 3) {
+            document.getElementById("conditionalImage").src = "@Url.Content("~/Content/img/bug.png")";
+        }
+    }
+
+
+</script>

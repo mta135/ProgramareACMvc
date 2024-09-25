@@ -120,6 +120,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PriorAppointmentController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -179,6 +180,9 @@
     <Content Include="Views\Authentication\MpassAuthentication.cshtml" />
     <Content Include="Views\Authentication\MpassInfo.cshtml" />
     <Content Include="Views\Authentication\MPASSRedirect.cshtml" />
+    <Content Include="Views\PriorAppointment\Appointment.cshtml" />
+    <Content Include="Views\PriorAppointment\MSignRedirect.cshtml" />
+    <Content Include="Views\PriorAppointment\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

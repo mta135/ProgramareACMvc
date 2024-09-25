@@ -1,0 +1,263 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using CaptchaMvc.HtmlHelpers
+
+
+@model ProgramareAC.Models.AppointmentModel
+@{
+    ViewBag.Title = "Insert";
+}
+
+
+
+<div class="col-sm-8 col-sm-6 ">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        if (!Html.ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger text-center">
+                Codul de verificare este incorect
+            </div>
+        }
+
+        <div class="form-group">
+            <label class="col-sm-4 col-xs-6 control-label" for="typectas" align="right">AC CNAS:</label>
+            @Html.DropDownListFor(x => x.Select1, Model.AcCnas, "Selectați", new { @class = "form-control", @id = "Select1", style = "height:32px" })
+            <span class="field-validation-valid" data-valmsg-for="Select1" data-valmsg-replace="true"></span>
+            <br />
+
+            <label class="col-sm-4 col-xs-4 control-label" for="Service" align="right">Tipul serviciului:</label>
+            @Html.DropDownListFor(x => x.Service, Model.TipulServiciului, new { @class = "form-control", @id = "Service", style = "height:32px" })
+            @Html.ValidationMessageFor(x => x.Service)
+            <br />
+
+            <label class="col-sm-4 col-xs-4 control-label" for="Date" align="right">Data nașterii:</label>
+            @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @id = "date", style = "height:32px", placeholder = "Data nasterii solicitantului (DD-MM-YYYY)", @onchange = "ValidateBirthDate()" })
+            @*<input type="date" name="date" class="form-control" placeholder="dd-mm-yyyy" value="" min="1997-01-01" max="2030-12-31">*@
+            <span class="field-validation-valid" data-valmsg-for="Date" data-valmsg-replace="true"></span>
+            <br />
+            @*<br />*@
+
+            <label class="col-sm-4 col-xs-4 control-label" for="IDNP" align="right">IDNP :</label>
+            @Html.TextBoxFor(x => x.IDNP, new { @class = "form-control", autocomplete = "off", placeholder = "IDNP-ul solicitantului", style = "height:32px" })
+            @Html.ValidationMessageFor(x => x.IDNP)
+            <br />
+
+            <label class="col-sm-4  control-label" for="LastName" align="right">Nume:</label>
+            @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", autocomplete = "off", placeholder = "Nume solicitantului", style = "height:32px" })
+            @Html.ValidationMessageFor(x => x.LastName)
+            <br />
+
+            <label class="col-sm-4  control-label" for="FirstName" align="right">Prenume:</label>
+            @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", autocomplete = "off", placeholder = "Prenume solicitantului", style = "height:32px" })
+            @Html.ValidationMessageFor(x => x.FirstName)
+            <br />
+
+            <label class="col-sm-4  control-label" for="FirstName" align="right">E-mail:</label>
+            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", autocomplete = "off", placeholder = "E-mail", style = "height:32px" })
+            <br />
+
+            <label class="col-sm-4  control-label" for="FirstName" align="right">Telefon:</label>
+            @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @id = "phone", autocomplete = "off", placeholder = "Nr.de telefon", style = "height:32px" })
+            @Html.ValidationMessageFor(x => x.Phone)
+            <br />
+
+            <label class="col-sm-4  control-label" for="FirstName" align="right">Subiectul audientiei:</label>
+            @Html.TextAreaFor(x => x.AudienceSubject, 3, 10, new { @class = "form-control", autocomplete = "off", placeholder = "Subiectul audientiei" })
+            @Html.ValidationMessageFor(x => x.AudienceSubject)
+            @*<br />*@
+
+            <div class="checkbox checkbox-success">
+                <input id="CorrectData" type="checkbox" name="CorrectData" data-val="true" data-val-required="required" required>
+                <label for="CorrectData">
+                    Am verificat datele introduse şi confirm corectitudinea lor pe propria răspundere.
+                </label>
+            </div>
+
+            @Html.ValidationMessage("CorrectData", "Acest cîmp este obligator.")
+            <div class="checkbox checkbox-success">
+                <input id="LegalAccept" type="checkbox" name="LegalAcept" required>
+                <label for="LegalAccept">
+                    Cunosc prevederile legislaţiei în domeniul protecţiei datelor cu caracter personal şi accept prelucrarea datelor personale.
+                </label>
+            </div>
+            @Html.ValidationMessage("LegalAcept", "Acest cîmp este obligator.")
+
+
+            <label class="col-sm-4 col-xs-4 control-label" for="type" align="right">   </label>
+            <div class="col-sm-8 ">
+                <input class="btn btn_important" id="Button1" type="button" value="Alege data și ora" />
+            </div>
+
+            @*col-xs-4*@
+            <label class="col-sm-4 col-xs-4  control-label" for="type" align="right">Data și ora disponibilă:</label>
+            <div class="col-sm-8 col-xs-10">
+                <select id="Times" class="form-control" name="Times" style="height:32px" data-val="true" data-val-required="Alege data și ora">
+                    <option value="" selected>Alege data și ora disponibilă</option>
+                </select>
+                <span class="field-validation-valid" data-valmsg-for="Times" data-valmsg-replace="true"></span>
+                <br />
+            </div>
+        </div>
+        <br />
+        @*@Html.Captcha(6, "_CaptchaPartial")
+        <hr />*@
+
+        @*<label class="col-md-4 control-label">    </label>*@
+        <label class="col-sm-4 col-xs-4 control-label" for="type" align="right">   </label>
+        <div class="col-sm-8 ">
+            <br /> <button class="btn btn_lg btn_important" type="submit">Aplică</button>
+        </div>
+        <br />
+
+    }
+
+</div>
+
+<div class="col-md-5 col-sm-12">
+    <div class="section">
+        <h4 class="text-center">Util</h4>
+        <ul class="list-unstyled">
+            <li>
+                1. La completarea câmpului „Selectați AC CNAS” se va selecta funcția persoanei la care se solicită programarea în audiență..
+            </li>
+            <li>
+                <br />
+                2. Câmpul „Telefon” urmează a fi completat în mod obligatoriu, în scopul contactării solicitantului de audiență în cazul survenirii unor circumstanțe neprevăzute în procesul de organizare a audienței.
+                Numărul de telefon poate fi atît de telefonie mobilă cît și telefonie fixă.
+            </li>
+            <li>
+                <br />
+                3. La completarea câmpului „Subiectul audienței” se va indica succint problema ce urmează a fi abordată în cadrul audienței.
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $('#Button1').on('click', function () {
+       /* debugger;*/
+
+        $.ajax({
+            type: "GET",
+            @*url: "~/Home/GetTimes",*@
+            url: '@(Url.Action("GetTimes", "PriorAppointment"))',
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            data: {
+                rn: $("#Select1").val(),
+                serv: $("#Service").val()
+            },
+            success: function (result) {
+                $('#Times').empty();
+                $('#Times').append('<option value="" selected>' + "Selectați data și ora" + '</option>');
+                var str1;
+                for (var i in result) {
+                    str1 = '' + result[i].orar_id + '|' + result[i].orar_day + ' --> ' + result[i].orar_time;
+                    $('#Times').append('<option value="' + str1 + '">' + result[i].orar_day + ' --> ' + result[i].orar_time + '</option>');
+                }
+            },
+            error: function (response) {
+                $('#Times').empty();
+                $('#Times').append('<option value="" selected>' + 'Alege data și ora disponibilă' + '</option>');
+                alert('Nu există program pentru acest serviciu');
+                //alert('Error=<' + $("#Select1").val() + '> <' + $("#Service").val()+'>');
+            }
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#date").mask("99-99-9999", { placeholder: "DD-MM-YYYY" });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#phone').keypress(function (e) {
+            var charCode = (e.which) ? e.which : event.keyCode
+            if (String.fromCharCode(charCode).match(/[^0-9]/g))
+                return false;
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#Select1').change(function () {
+                var ddlService = $("#Service");
+                $.ajax({
+                    type: "GET",
+                    url: '@(Url.Action("GetServiceType", "PriorAppointment"))',
+                    contentType: "application/json;charset=utf-8",
+                    data: {
+                        rn: $('#Select1').val()
+                    },
+                    datatype: "json",
+                    traditional: true,
+                    success: function (data) {
+                        ddlService.html('');
+                        ddlService.append($('<option>Selectați serviciul</option>'));
+                        $.each(data, function (i, option) {
+                            var str = option.Value + '|'+ option.Text;
+                            ddlService.append("<option value='" + str + "'>" + option.Text + "</option>")
+                        });
+                    }
+                });
+            });
+        });
+</script>
+
+
+
+<script type="text/javascript">
+    function ValidateBirthDate() {
+      /*  debugger;*/
+
+        var temp = document.getElementById("date").value;
+        var splited = temp.split("-");
+
+        var birthBate = new Date(splited[2] + '-' + splited[1] + '-' + splited[0]);
+        var _age = calculateAge(birthBate);
+        var currentDate = new Date();
+
+        if (birthBate > currentDate) {
+            alert("Data nașterii introdusă greșit");
+            $("#date").get(0).value = "";
+        }
+
+        else if (_age < 18) {
+            alert("Data nașterii introdusă greșit");
+            $("#date").get(0).value = "";
+        }
+
+        else if (_age > 120) {
+            alert("Data nașterii introdusă greșit");
+            $("#date").get(0).value = "";
+        }
+
+    }
+
+    function subtractYears(date, years) {
+        date.setFullYear(date.getFullYear() - years);
+        return date;
+    }
+
+
+    function calculateAge(birthday) { // birthday is a date
+        var ageDifMs = Date.now() - birthday;
+        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+        return Math.abs(ageDate.getUTCFullYear() - 1970);
+    }
+
+</script>
