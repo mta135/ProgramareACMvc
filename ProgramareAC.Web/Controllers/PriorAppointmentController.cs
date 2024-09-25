@@ -9,7 +9,7 @@ namespace ProgramareAC.Web.Controllers
 {
     public class PriorAppointmentController : Controller
     {
-        ServiceReference.WSO2_package_017ACPortTypeClient client;
+        readonly ServiceReference.WSO2_package_017ACPortTypeClient client;
 
         public PriorAppointmentController()
         {
@@ -21,13 +21,29 @@ namespace ProgramareAC.Web.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult Appointment()
         {
-
-         
-            var value = client.get_RN();
-
-
             AppointmentModel appointmentModel = new AppointmentModel();
+
+            appointmentModel.AcCnas = SetAcCnasItems();
+            appointmentModel.TipulServiciului = new List<SelectListItem>();
+
             return View(appointmentModel);
+        }
+
+        private List<SelectListItem> SetAcCnasItems()
+        {
+            ServiceReference.Row3[] arrRN =  client.get_RN();
+
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+            foreach (ServiceReference.Row3 _arrRN in arrRN)
+            {
+                selectListItems.Add(new SelectListItem()
+                {
+                    Value = _arrRN.RN.ToString(),
+                    Text = _arrRN.NAMER
+                });
+            }
+
+            return selectListItems;
         }
     }
 }

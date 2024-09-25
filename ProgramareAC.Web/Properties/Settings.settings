@@ -1,9 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ProgramareAC.Web.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
   <Profiles />
-  <Settings>
-    <Setting Name="ProgramareAC_Web_ServiceReference_WSO2_package_017AC" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">https://172.16.1.11:8243/services/WSO2_package_017AC.SecureSOAP11Endpoint</Value>
-    </Setting>
-  </Settings>
+  <Settings />
 </SettingsFile>

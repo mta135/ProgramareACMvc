@@ -22,15 +22,5 @@ namespace ProgramareAC.Web.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://172.16.1.11:8243/services/WSO2_package_017AC.SecureSOAP11Endpoint")]
-        public string ProgramareAC_Web_ServiceReference_WSO2_package_017AC {
-            get {
-                return ((string)(this["ProgramareAC_Web_ServiceReference_WSO2_package_017AC"]));
-            }
-        }
     }
 }

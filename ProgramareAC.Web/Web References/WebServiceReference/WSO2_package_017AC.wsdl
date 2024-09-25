@@ -1,393 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://ws.wso2.org/dataservice" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://ws.wso2.org/dataservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  <wsdl:documentation>programare Online la audiența la Aparatul Central al CNAS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </wsdl:documentation>
-  <wsdl:types>
-    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
-      <xs:element name="DataServiceFault">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="current_params" type="xs:string" />
-            <xs:element name="current_request_name" type="xs:string" />
-            <xs:element name="nested_exception" type="xs:string" />
-            <xs:element name="source_data_service">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="location" type="xs:string" />
-                  <xs:element name="default_namespace" type="xs:string" />
-                  <xs:element name="description" type="xs:string" />
-                  <xs:element name="data_service_name" type="xs:string" />
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="ds_code" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="REQUEST_STATUS" type="xs:string" />
-      <xs:element name="DATA_SERVICE_RESPONSE">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:any minOccurs="0" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="proc_test">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Group_proc_test" type="ns0:Group_proc_test" />
-      <xs:complexType name="Group_proc_test">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="p1" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:element name="get_FreeTime">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="Branch_code" nillable="true" type="xs:string" />
-            <xs:element name="Serv_rf" nillable="true" type="xs:decimal" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Group_get_FreeTime" type="ns0:Group_get_FreeTime" />
-      <xs:complexType name="Group_get_FreeTime">
-        <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Row">
-        <xs:sequence>
-          <xs:element name="orar_id" nillable="true" type="xs:integer" />
-          <xs:element name="orar_day" nillable="true" type="xs:string" />
-          <xs:element name="orar_time" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:element name="set_Time">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="IDNP" nillable="true" type="xs:string" />
-            <xs:element name="LastName" nillable="true" type="xs:string" />
-            <xs:element name="FirstName" nillable="true" type="xs:string" />
-            <xs:element name="BirthDate" nillable="true" type="xs:string" />
-            <xs:element name="Orar_ID" nillable="true" type="xs:decimal" />
-            <xs:element name="Serv_rf" nillable="true" type="xs:decimal" />
-            <xs:element name="RN" nillable="true" type="xs:decimal" />
-            <xs:element name="pEmail" nillable="true" type="xs:string" />
-            <xs:element name="pTel" nillable="true" type="xs:string" />
-            <xs:element name="pTema" nillable="true" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Rez" type="ns0:Rez" />
-      <xs:complexType name="Rez">
-        <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row2" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Row2">
-        <xs:sequence>
-          <xs:element name="Rezult_Text" nillable="true" type="xs:string" />
-          <xs:element name="Error" nillable="true" type="xs:decimal" />
-          <xs:element name="pCERERE_ID" nillable="true" type="xs:integer" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:element name="get_RN">
-        <xs:complexType>
-          <xs:sequence />
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Group_get_RN" type="ns0:Group_get_RN" />
-      <xs:complexType name="Group_get_RN">
-        <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row3" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Row3">
-        <xs:sequence>
-          <xs:element name="RN" nillable="true" type="xs:decimal" />
-          <xs:element name="NAMER" nillable="true" type="xs:string" />
-          <xs:element name="ADRES" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:element name="get_Serv">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="RN" nillable="true" type="xs:decimal" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="Group_get_Serv" type="ns0:Group_get_Serv" />
-      <xs:complexType name="Group_get_Serv">
-        <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row4" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Row4">
-        <xs:sequence>
-          <xs:element name="SERV_ID" nillable="true" type="xs:string" />
-          <xs:element name="SERV_NAME_RO" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-    </xs:schema>
-  </wsdl:types>
-  <wsdl:message name="proc_testRequest">
-    <wsdl:part name="parameters" element="ns0:proc_test" />
-  </wsdl:message>
-  <wsdl:message name="proc_testResponse">
-    <wsdl:part name="parameters" element="ns0:Group_proc_test" />
-  </wsdl:message>
-  <wsdl:message name="DataServiceFault">
-    <wsdl:part name="parameters" element="ns0:DataServiceFault" />
-  </wsdl:message>
-  <wsdl:message name="get_FreeTimeRequest">
-    <wsdl:part name="parameters" element="ns0:get_FreeTime" />
-  </wsdl:message>
-  <wsdl:message name="get_FreeTimeResponse">
-    <wsdl:part name="parameters" element="ns0:Group_get_FreeTime" />
-  </wsdl:message>
-  <wsdl:message name="set_TimeRequest">
-    <wsdl:part name="parameters" element="ns0:set_Time" />
-  </wsdl:message>
-  <wsdl:message name="set_TimeResponse">
-    <wsdl:part name="parameters" element="ns0:Rez" />
-  </wsdl:message>
-  <wsdl:message name="get_RNRequest">
-    <wsdl:part name="parameters" element="ns0:get_RN" />
-  </wsdl:message>
-  <wsdl:message name="get_RNResponse">
-    <wsdl:part name="parameters" element="ns0:Group_get_RN" />
-  </wsdl:message>
-  <wsdl:message name="get_ServRequest">
-    <wsdl:part name="parameters" element="ns0:get_Serv" />
-  </wsdl:message>
-  <wsdl:message name="get_ServResponse">
-    <wsdl:part name="parameters" element="ns0:Group_get_Serv" />
-  </wsdl:message>
-  <wsdl:portType name="WSO2_package_017ACPortType">
-    <wsdl:operation name="proc_test">
-      <wsdl:documentation />
-      <wsdl:input wsaw:Action="urn:proc_test" message="ns0:proc_testRequest" />
-      <wsdl:output wsaw:Action="urn:proc_testResponse" message="ns0:proc_testResponse" />
-      <wsdl:fault wsaw:Action="urn:proc_testDataServiceFault" name="DataServiceFault" message="ns0:DataServiceFault" />
-    </wsdl:operation>
-    <wsdl:operation name="get_FreeTime">
-      <wsdl:documentation>call procedure pentru Aparatul Central                                    </wsdl:documentation>
-      <wsdl:input wsaw:Action="urn:get_FreeTime" message="ns0:get_FreeTimeRequest" />
-      <wsdl:output wsaw:Action="urn:get_FreeTimeResponse" message="ns0:get_FreeTimeResponse" />
-      <wsdl:fault wsaw:Action="urn:get_FreeTimeDataServiceFault" name="DataServiceFault" message="ns0:DataServiceFault" />
-    </wsdl:operation>
-    <wsdl:operation name="set_Time">
-      <wsdl:documentation />
-      <wsdl:input wsaw:Action="urn:set_Time" message="ns0:set_TimeRequest" />
-      <wsdl:output wsaw:Action="urn:set_TimeResponse" message="ns0:set_TimeResponse" />
-      <wsdl:fault wsaw:Action="urn:set_TimeDataServiceFault" name="DataServiceFault" message="ns0:DataServiceFault" />
-    </wsdl:operation>
-    <wsdl:operation name="get_RN">
-      <wsdl:documentation />
-      <wsdl:input wsaw:Action="urn:get_RN" message="ns0:get_RNRequest" />
-      <wsdl:output wsaw:Action="urn:get_RNResponse" message="ns0:get_RNResponse" />
-      <wsdl:fault wsaw:Action="urn:get_RNDataServiceFault" name="DataServiceFault" message="ns0:DataServiceFault" />
-    </wsdl:operation>
-    <wsdl:operation name="get_Serv">
-      <wsdl:documentation />
-      <wsdl:input wsaw:Action="urn:get_Serv" message="ns0:get_ServRequest" />
-      <wsdl:output wsaw:Action="urn:get_ServResponse" message="ns0:get_ServResponse" />
-      <wsdl:fault wsaw:Action="urn:get_ServDataServiceFault" name="DataServiceFault" message="ns0:DataServiceFault" />
-    </wsdl:operation>
-  </wsdl:portType>
-  <wsdl:binding name="WSO2_package_017ACSOAP11Binding" type="ns0:WSO2_package_017ACPortType">
-    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="proc_test">
-      <soap:operation soapAction="urn:proc_test" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="DataServiceFault">
-        <soap:fault use="literal" name="DataServiceFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="get_FreeTime">
-      <soap:operation soapAction="urn:get_FreeTime" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="DataServiceFault">
-        <soap:fault use="literal" name="DataServiceFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="set_Time">
-      <soap:operation soapAction="urn:set_Time" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="DataServiceFault">
-        <soap:fault use="literal" name="DataServiceFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="get_RN">
-      <soap:operation soapAction="urn:get_RN" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="DataServiceFault">
-        <soap:fault use="literal" name="DataServiceFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="get_Serv">
-      <soap:operation soapAction="urn:get_Serv" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="DataServiceFault">
-        <soap:fault use="literal" name="DataServiceFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:binding name="WSO2_package_017ACSOAP12Binding" type="ns0:WSO2_package_017ACPortType">
-    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="proc_test">
-      <soap12:operation soapAction="urn:proc_test" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="DataServiceFault">
-        <soap12:fault use="literal" name="DataServiceFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="get_FreeTime">
-      <soap12:operation soapAction="urn:get_FreeTime" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="DataServiceFault">
-        <soap12:fault use="literal" name="DataServiceFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="set_Time">
-      <soap12:operation soapAction="urn:set_Time" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="DataServiceFault">
-        <soap12:fault use="literal" name="DataServiceFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="get_RN">
-      <soap12:operation soapAction="urn:get_RN" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="DataServiceFault">
-        <soap12:fault use="literal" name="DataServiceFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="get_Serv">
-      <soap12:operation soapAction="urn:get_Serv" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="DataServiceFault">
-        <soap12:fault use="literal" name="DataServiceFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:binding name="WSO2_package_017ACHttpBinding" type="ns0:WSO2_package_017ACPortType">
-    <http:binding verb="POST" />
-    <wsdl:operation name="proc_test">
-      <http:operation location="proc_test" />
-      <wsdl:input>
-        <mime:content part="parameters" type="text/xml" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:content part="parameters" type="text/xml" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="get_FreeTime">
-      <http:operation location="get_FreeTime" />
-      <wsdl:input>
-        <mime:content part="parameters" type="text/xml" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:content part="parameters" type="text/xml" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="set_Time">
-      <http:operation location="set_Time" />
-      <wsdl:input>
-        <mime:content part="parameters" type="text/xml" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:content part="parameters" type="text/xml" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="get_RN">
-      <http:operation location="get_RN" />
-      <wsdl:input>
-        <mime:content part="parameters" type="text/xml" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:content part="parameters" type="text/xml" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="get_Serv">
-      <http:operation location="get_Serv" />
-      <wsdl:input>
-        <mime:content part="parameters" type="text/xml" />
-      </wsdl:input>
-      <wsdl:output>
-        <mime:content part="parameters" type="text/xml" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:service name="WSO2_package_017AC">
-    <wsdl:port name="SecureSOAP11Endpoint" binding="ns0:WSO2_package_017ACSOAP11Binding">
-      <soap:address location="https://172.16.1.11:8243/services/WSO2_package_017AC.SecureSOAP11Endpoint" />
-    </wsdl:port>
-    <wsdl:port name="SOAP11Endpoint" binding="ns0:WSO2_package_017ACSOAP11Binding">
-      <soap:address location="http://172.16.1.11:9763/services/WSO2_package_017AC.SOAP11Endpoint" />
-    </wsdl:port>
-    <wsdl:port name="SecureSOAP12Endpoint" binding="ns0:WSO2_package_017ACSOAP12Binding">
-      <soap12:address location="https://172.16.1.11:8243/services/WSO2_package_017AC.SecureSOAP12Endpoint" />
-    </wsdl:port>
-    <wsdl:port name="SOAP12Endpoint" binding="ns0:WSO2_package_017ACSOAP12Binding">
-      <soap12:address location="http://172.16.1.11:9763/services/WSO2_package_017AC.SOAP12Endpoint" />
-    </wsdl:port>
-    <wsdl:port name="SecureHTTPEndpoint" binding="ns0:WSO2_package_017ACHttpBinding">
-      <http:address location="https://172.16.1.11:8243/services/WSO2_package_017AC.SecureHTTPEndpoint" />
-    </wsdl:port>
-    <wsdl:port name="HTTPEndpoint" binding="ns0:WSO2_package_017ACHttpBinding">
-      <http:address location="http://172.16.1.11:9763/services/WSO2_package_017AC.HTTPEndpoint" />
-    </wsdl:port>
-  </wsdl:service>
-</wsdl:definitions>
