@@ -328,8 +328,13 @@
 </script>
 
 <script type="text/javascript">
-    $(function () {
-        $("#date").mask("99-99-9999", { placeholder: "DD-MM-YYYY" });
+    $(document).ready(function () {
+
+        Inputmask("99-99-9999", {
+            placeholder: "-",
+            greedy: false,
+
+        }).mask('#date');
     });
 </script>
 

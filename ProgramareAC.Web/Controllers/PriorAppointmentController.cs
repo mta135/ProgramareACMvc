@@ -23,7 +23,7 @@ namespace ProgramareAC.Web.Controllers
         {
             AppointmentModel appointmentModel = new AppointmentModel();
 
-            appointmentModel.AcCnas = SetAcCnasItems();
+            appointmentModel.AcCnas = new List<SelectListItem>(); // SetAcCnasItems();
             appointmentModel.TipulServiciului = new List<SelectListItem>();
 
             return View(appointmentModel);
