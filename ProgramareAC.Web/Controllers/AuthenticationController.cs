@@ -15,6 +15,7 @@ namespace ProgramareAC.Web.Controllers
     {
         public ActionResult MpassAuthentication()
         {
+            WriteLog.Common.Info("AuthenticationController/MpassAuthentication");
 
             return View();
         }
