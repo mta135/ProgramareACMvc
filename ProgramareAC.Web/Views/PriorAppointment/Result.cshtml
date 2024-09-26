@@ -104,32 +104,12 @@
 
     });
 
-       
 
+    $j("#sing").click(function () {
+        $j("#dialog").dialog('open');
+            ValidateSing();
+        });
 
-
-
-    //$(function () {
-    //    $("#dialog").dialog();
-    //});
-
-    //$(function () {
-
-    //    $("#dialog").dialog({
-    //        autoOpen: false,
-    //        resizable: false,
-
-    //        width: 600,
-    //        height: 300,
-    //    });
-
-    //    $("#sing").click(function () {
-    //        $("#dialog").dialog('open');
-
-    //        ValidateSing();
-
-    //    });
-    //});
 
     function ValidateSing() {
 
@@ -176,6 +156,5 @@
             document.getElementById("conditionalImage").src = "@Url.Content("~/Content/img/bug.png")";
         }
     }
-
 
 </script>
