@@ -281,7 +281,6 @@
 <script type="text/javascript">
     function ValidateBirthDate() {
       
-
         var temp = document.getElementById("date").value;
         var splited = temp.split("-");
 
@@ -349,7 +348,7 @@
         if (!correctData.checked) {
 
             PreventSubmit(event);
-            errorCorrectData.style.display = 'inline';
+            errorCorrectData.style.display = 'block';
 
         } else {
             errorCorrectData.style.display = 'none';
@@ -364,7 +363,7 @@
         if (!legalAccept.checked) {
 
             PreventSubmit(event);
-            errorLegalAccept.style.display = 'inline';
+            errorLegalAccept.style.display = 'block';
 
         } else {
             errorLegalAccept.style.display = 'none';
