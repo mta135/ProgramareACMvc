@@ -12,15 +12,10 @@
 
 <div class="container">
 
-
-
-
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Appointment", "PriorAppointment", FormMethod.Post, new { id = "appointmentForm" }))
     {
 
-
         <div class="row">
-
 
             <div class="col-sm-8">
 
@@ -118,7 +113,8 @@
                         </label>
                     </div>
                 </div>
-                <div class="row">
+
+                <div class="row" id="error-corect-data" style="display: none;">
                     <div class="col-sm-10">
                         <span id="error-corect-data" style="color: red;">Acest cimp este obligator</span>
                     </div>
@@ -134,6 +130,13 @@
                         </label>
                     </div>
                 </div>
+                <div class="row" id="error-legal-accept" style="display: none;">
+                    <div class="col-sm-10">
+                        <span id="error-corect-data" style="color: red;">Acest cimp este obligator</span>
+                    </div>
+                </div>
+
+
                 <br />
 
                 <div class="row">
@@ -280,6 +283,7 @@
 </div>
 
 <script type="text/javascript">
+
     $('#Button1').on('click', function () {
        /* debugger;*/
 
@@ -365,7 +369,7 @@
 
 <script type="text/javascript">
     function ValidateBirthDate() {
-          debugger;
+      
 
         var temp = document.getElementById("date").value;
         var splited = temp.split("-");
@@ -402,5 +406,64 @@
         var ageDate = new Date(ageDifMs); // miliseconds from epoch
         return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
+
+    /*Chekc box valiation*/
+    document.getElementById('appointmentForm').addEventListener('submit', function (event) {
+        debugger;
+
+        ValidateCorrectData(event);
+        ValidateLegalAccept(event);
+    });
+
+
+    document.getElementById("CorrectData").addEventListener("change", ev => {
+
+        var errorCorrectData = document.getElementById('error-corect-data');
+        errorCorrectData.style.display = 'none';
+
+    });
+
+    document.getElementById("LegalAccept").addEventListener("change", ev => {
+
+        var errorLegalAccept = document.getElementById('error-legal-accept');
+        errorLegalAccept.style.display = 'none';
+
+    });
+
+    function ValidateCorrectData(event) {
+
+        var correctData = document.getElementById('CorrectData');
+        var errorCorrectData = document.getElementById('error-corect-data');
+
+        if (!correctData.checked) {
+
+            PreventSubmit(event);
+            errorCorrectData.style.display = 'inline';
+
+        } else {
+            errorCorrectData.style.display = 'none';
+        }
+    }
+
+    function ValidateLegalAccept(event) {
+
+        var legalAccept = document.getElementById('LegalAccept');
+        var errorLegalAccept = document.getElementById('error-legal-accept');
+
+        if (!legalAccept.checked) {
+
+            PreventSubmit(event);
+            errorLegalAccept.style.display = 'inline';
+
+        } else {
+            errorLegalAccept.style.display = 'none';
+        }
+    }
+
+
+    function PreventSubmit(event) {
+        event.preventDefault();
+    }
+
 
 </script>
