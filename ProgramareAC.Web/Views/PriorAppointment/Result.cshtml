@@ -5,9 +5,9 @@
     ViewBag.Title = "Result";
 }
 
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
 
 
 <h4>Rezultatul solicitării:</h4>
@@ -89,23 +89,36 @@
 @*Validate sign*@
 <script>
 
-    $(function () {
+    var $j = jQuery.noConflict();
 
-        $("#dialog").dialog({
-            autoOpen: false,
-            resizable: false,
+    $j("#dialog").dialog();
 
-            width: 600,
-            height: 300,
-        });
+       
 
-        $("#sing").click(function () {
-            $("#dialog").dialog('open');
 
-            ValidateSing();
 
-        });
-    });
+
+    //$(function () {
+    //    $("#dialog").dialog();
+    //});
+
+    //$(function () {
+
+    //    $("#dialog").dialog({
+    //        autoOpen: false,
+    //        resizable: false,
+
+    //        width: 600,
+    //        height: 300,
+    //    });
+
+    //    $("#sing").click(function () {
+    //        $("#dialog").dialog('open');
+
+    //        ValidateSing();
+
+    //    });
+    //});
 
     function ValidateSing() {
 
