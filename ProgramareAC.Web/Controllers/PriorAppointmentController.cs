@@ -39,7 +39,7 @@ namespace ProgramareAC.Web.Controllers
         {
             AppointmentModel appointmentModel = new AppointmentModel();
 
-            appointmentModel.AcCnas = new List<SelectListItem>(); // SetAcCnasItems();
+            appointmentModel.AcCnas = SetAcCnasItems();
             appointmentModel.TipulServiciului = new List<SelectListItem>();
 
             AppointmentModel parsedAppointmentModel = ParseSamlUserData.ParseTo(new AppointmentModel()); //ParseToAppointmentModel();
