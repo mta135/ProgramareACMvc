@@ -91,7 +91,18 @@
 
     var $j = jQuery.noConflict();
 
-    $j("#dialog").dialog();
+    $j("#dialog").dialog({
+
+        autoOpen: false,
+        resizable: false,
+
+        width: 600,
+        height: 300,
+        open: function () {
+            $('#dialog').css('overflow', 'hidden');
+        }
+
+    });
 
        
 
