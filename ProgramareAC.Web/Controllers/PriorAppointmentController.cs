@@ -40,7 +40,6 @@ namespace ProgramareAC.Web.Controllers
             AppointmentModel appointmentModel = new AppointmentModel();
 
             appointmentModel.AcCnas = SetAcCnasItems();
-            appointmentModel.TipulServiciului = new List<SelectListItem>();
 
             AppointmentModel parsedAppointmentModel = ParseSamlUserData.ParseTo(new AppointmentModel()); //ParseToAppointmentModel();
 
@@ -81,6 +80,7 @@ namespace ProgramareAC.Web.Controllers
 
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult MSignDocumentResponse(string requestID, string relayState)
         {

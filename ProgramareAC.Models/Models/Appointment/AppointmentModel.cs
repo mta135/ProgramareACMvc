@@ -45,7 +45,7 @@ namespace ProgramareAC.Models
         public byte[] Hash { get; set; }
 
         public IEnumerable<SelectListItem> AcCnas { get; set; }
-        public IEnumerable<SelectListItem> TipulServiciului { get; set; }
+        public IEnumerable<SelectListItem> TipulServiciului { get; set; } = new List<SelectListItem>();
 
 
 
