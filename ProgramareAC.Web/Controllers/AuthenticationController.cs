@@ -20,6 +20,8 @@ namespace ProgramareAC.Web.Controllers
             return View();
         }
 
+        #region MPASS
+
         //#######################    MPASS Methods    ###############################
 
         private string RequestBaseUrl()
@@ -224,6 +226,8 @@ namespace ProgramareAC.Web.Controllers
         }
 
         //#######################    MPASS Methods    ###############################
+
+        #endregion 
 
     }
 }
