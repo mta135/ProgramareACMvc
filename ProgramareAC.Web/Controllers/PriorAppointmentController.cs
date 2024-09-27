@@ -321,9 +321,25 @@ namespace ProgramareAC.Web.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Status()
         {
             return View();
         }
+
+
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Status(string RequestNumber)
+        {
+           
+            
+            return View();
+        }
+
+
+
+
     }
 }
