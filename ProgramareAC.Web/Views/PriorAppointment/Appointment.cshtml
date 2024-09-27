@@ -17,11 +17,11 @@
 
         <div class="row">
 
-            <div class="col-sm-8">
+            <div class="col-sm-9">
 
                 <div class="row">
-                    <label class="col-sm-3">AC CNAS</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-2">AC CNAS</label>
+                    <div class="col-sm-10">
                         @Html.DropDownListFor(x => x.Select1, Model.AcCnas, "Selectați", new { @class = "form-control", @id = "Select1" })
                         <span class="field-validation-valid" data-valmsg-for="Select1" data-valmsg-replace="true"></span>
                         <br />
@@ -29,26 +29,25 @@
                 </div>
 
                 <div class="row">
-                    <label class="col-sm-3">Tipul serviciului:</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-2">Tipul serviciului:</label>
+                    <div class="col-sm-10">
                         @Html.DropDownListFor(x => x.Service, Model.TipulServiciului, new { @class = "form-control", @id = "Service" })
                         @Html.ValidationMessageFor(x => x.Service)
                         <br />
                     </div>
                 </div>
 
+
                 <div class="row">
-                    <label class="col-sm-3">Data nașterii:</label>
-                    <div class="col-sm-9">
-                        @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @id = "date", placeholder = "Data nasterii solicitantului (DD-MM-YYYY)", @onchange = "ValidateBirthDate()" })
+                    <label class="col-sm-2">Data nașterii:</label>
+                    <div class="col-sm-4">
+                        @Html.TextBoxFor(x => x.Date, new { @class = "form-control", @id = "date", placeholder = "Data nasterii (DD-MM-YYYY)", @onchange = "ValidateBirthDate()" })
                         <span class="field-validation-valid" data-valmsg-for="Date" data-valmsg-replace="true"></span>
                         <br />
                     </div>
-                </div>
 
-                <div class="row">
-                    <label class="col-sm-3">IDNP :</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-2">IDNP :</label>
+                    <div class="col-sm-4">
                         @Html.TextBoxFor(x => x.IDNP, new { @class = "form-control", autocomplete = "off", placeholder = "IDNP-ul solicitantului" })
                         @Html.ValidationMessageFor(x => x.IDNP)
                         <br />
@@ -56,45 +55,39 @@
                 </div>
 
                 <div class="row">
-                    <label class="col-sm-3">Nume :</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-2">Nume :</label>
+                    <div class="col-sm-4">
                         @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", autocomplete = "off", placeholder = "Nume solicitantului" })
                         @Html.ValidationMessageFor(x => x.LastName)
                         <br />
                     </div>
-                </div>
 
-                <div class="row">
-                    <label class="col-sm-3">Prenume :</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-2">Prenume :</label>
+                    <div class="col-sm-4">
                         @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", autocomplete = "off", placeholder = "Prenume solicitantului" })
                         @Html.ValidationMessageFor(x => x.FirstName)
                         <br />
                     </div>
                 </div>
 
-
                 <div class="row">
-                    <label class="col-sm-3">E-mail :</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-2">E-mail :</label>
+                    <div class="col-sm-4">
                         @Html.TextBoxFor(x => x.Email, new { @class = "form-control", autocomplete = "off", placeholder = "E-mail" })
                         <br />
                     </div>
-                </div>
 
-                <div class="row">
-                    <label class="col-sm-3">Telefon :</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-2">Telefon :</label>
+                    <div class="col-sm-4">
                         @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @id = "phone", autocomplete = "off", placeholder = "Nr.de telefon" })
                         @Html.ValidationMessageFor(x => x.Phone)
                         <br />
                     </div>
                 </div>
 
-
                 <div class="row">
-                    <label class="col-sm-3">Subiectul audientiei :</label>
-                    <div class="col-sm-9">
+                    <label class="col-sm-2">Subiectul audientiei :</label>
+                    <div class="col-sm-10">
                         @Html.TextAreaFor(x => x.AudienceSubject, 3, 10, new { @class = "form-control", autocomplete = "off", placeholder = "Subiectul audientiei" })
                         @Html.ValidationMessageFor(x => x.AudienceSubject)
                         <br />
@@ -161,7 +154,7 @@
 
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="panel panel-default">
