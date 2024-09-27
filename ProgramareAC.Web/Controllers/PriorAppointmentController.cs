@@ -50,6 +50,7 @@ namespace ProgramareAC.Web.Controllers
             return View(appointmentModel);
         }
 
+        #region Msing
 
         //********************** MSING *********************
 
@@ -140,6 +141,8 @@ namespace ProgramareAC.Web.Controllers
         }
 
         //***********************************************
+
+        #endregion
 
         [HttpGet]
         public JsonResult GetServiceType(string rn)
