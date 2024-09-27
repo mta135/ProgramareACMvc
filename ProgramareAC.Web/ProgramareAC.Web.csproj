@@ -264,6 +264,7 @@
     <Content Include="Views\PriorAppointment\Appointment.cshtml" />
     <Content Include="Views\PriorAppointment\MSignRedirect.cshtml" />
     <Content Include="Views\PriorAppointment\Result.cshtml" />
+    <Content Include="Views\PriorAppointment\Status.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

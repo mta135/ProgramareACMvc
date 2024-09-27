@@ -319,5 +319,11 @@ namespace ProgramareAC.Web.Controllers
 
             return View("Result", model);
         }
+
+        [AllowAnonymous]
+        public ActionResult Status()
+        {
+            return View();
+        }
     }
 }
