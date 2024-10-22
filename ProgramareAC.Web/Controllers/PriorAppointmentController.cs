@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace ProgramareAC.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class PriorAppointmentController : Controller
     {
         readonly ServiceReference.WSO2_package_017ACPortTypeClient client;
