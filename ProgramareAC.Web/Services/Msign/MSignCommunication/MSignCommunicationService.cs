@@ -28,10 +28,8 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
 
         public string SendMSignDocumentRequest(AppointmentModel appointmentModel)
         {
-
             try
             {
-
                 string resultRequestId = null;
 
                 SignContentFields content = ConvertToSignContentFields(appointmentModel);
@@ -74,11 +72,9 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
                 _appointmentRepository.RegisterAppointmenRequest(appointmentModel);
 
                 return resultRequestId;
-
             }
             catch (Exception ex)
             {
-
                 WriteLog.Common.Error("Method SendMSignDocumentRequest give an erorr: ", ex);
 
                 return null;
@@ -96,7 +92,6 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
 
             try
             {
-
                 var client = MSignClientFactory.Create();
 
                 SignResponse signResponse = client.GetSignResponse(requestID, "ro");
@@ -106,7 +101,6 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
 
                 if (singResponseStatus == (int)SignStatus.Success)
                 {
-
                     _mSignRepository.UpdateSignedDocument(requestID, singResponseStatus, signResponse.Message);
 
                     SignPackSaveModel signPackSaveModel = new SignPackSaveModel(signResponse.Results);
@@ -117,17 +111,14 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
                     byte[] sign = signItem.XadesBytes;
 
                     _mSignRepository.SetSign(requestID, signItem.SignDate, signItem.SignerFullName, signItem.SignerIDNP, sign);
-
                 }
                 else
                 {
                     _mSignRepository.UpdateSignedDocument(requestID, singResponseStatus, signResponse.Message);
-
                 }
             }
             catch (Exception ex)
             {
-
                 WriteLog.Common.Error("Method MsignCheckRequest give an error. MSIngRequestId: " + requestID + "; Exception: ", ex);
             }
 
@@ -153,12 +144,10 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
 
             try
             {
-
                 IMSign client = MSignClientFactory.Create();
 
                 VerificationContent verificationContent = new VerificationContent
                 {
-
                     CorrelationID = correlationId,
                     Content = hash,
                     Signature = sign
@@ -190,11 +179,10 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
             }
             catch (Exception ex)
             {
+                WriteLog.Common.Error("Method VerifyMSignSignature give an error. Exception: ", ex);
 
-                // log exception error
                 result.Status = SignValidationStatus.ValidationError;
             }
-
             return result;
         }
 
