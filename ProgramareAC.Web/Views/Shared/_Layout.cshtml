@@ -24,7 +24,12 @@
 
 
     @{
-        string loginType = Session.GetLoginTypeKey();
+        string loginType = string.Empty; //= Session.GetLoginTypeKey();
+        if (User.Identity.IsAuthenticated)
+        {
+            loginType = "MPASS";
+        }
+
     }
 
 
