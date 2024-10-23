@@ -57,7 +57,7 @@ namespace ProgramareAC.Web.Controllers
         private string RequestBaseUrl()
         {
             HttpRequestBase request = HttpContext.Request;
-            string url = $"{request.Url.Scheme}://{request.Url.Authority}{request.ApplicationPath.TrimEnd('/')}";
+            string url = $"{request.Url.Scheme}s://{request.Url.Authority}{request.ApplicationPath.TrimEnd('/')}";
 
             return url;
         }
