@@ -55,6 +55,11 @@ namespace ProgramareAC.Web
 
                 sessionCookie.HttpOnly = true;
                 sessionCookie.SameSite = SameSiteMode.None;
+
+
+                sessionCookie.Expires = DateTime.Now.AddSeconds(1200);
+                sessionCookie.Secure = true;
+
             }
         }
 
