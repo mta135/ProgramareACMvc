@@ -37,8 +37,14 @@ namespace ProgramareAC.Web
             MPASSConfiguration.InitializeSettingsMVC5();
         }
 
-        protected void Session_Start(object sender, EventArgs e)
+
+
+
+        //TODO Persisten Session Verison 2 //A fost adaugata aceasta metoda... Poate va lucra corect... Must to be tested
+        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
+            WriteLog.Common.Debug("Application_PostAuthenticateRequest. Start");
+
             SessionStateSection sessionStateSection = (SessionStateSection)ConfigurationManager.GetSection("system.web/sessionState");
 
             string sessionCookieName = sessionStateSection.CookieName;
@@ -47,20 +53,44 @@ namespace ProgramareAC.Web
             {
                 HttpCookie sessionCookie = Response.Cookies[sessionCookieName];
 
-                //Set cookies values
-                sessionCookie.Value = Session.SessionID;
+                WriteLog.Common.Debug("Application_PostAuthenticateRequest: SessionCookie.SameSite: Before: " + sessionCookie.SameSite);
 
-                sessionCookie.Secure = true;
-                sessionCookie.Path = "/";
-
-                sessionCookie.HttpOnly = true;
                 sessionCookie.SameSite = SameSiteMode.None;
 
+                WriteLog.Common.Debug("Application_PostAuthenticateRequest: SessionCookie.SameSite: After: " + sessionCookie.SameSite);
 
-                sessionCookie.Expires = DateTime.Now.AddSeconds(1200);
+                sessionCookie.Secure = true; 
 
             }
         }
+
+
+
+
+
+        // TODO Persisten Session. Version 1 Prima metoda de lucru cu sesiia. Not working as exepted
+        //protected void Session_Start(object sender, EventArgs e)
+        //{
+        //    SessionStateSection sessionStateSection = (SessionStateSection)ConfigurationManager.GetSection("system.web/sessionState");
+
+        //    string sessionCookieName = sessionStateSection.CookieName;
+
+        //    if (Request.Cookies[sessionCookieName] != null)
+        //    {
+        //        HttpCookie sessionCookie = Response.Cookies[sessionCookieName];
+
+        //        //Set cookies values
+        //        sessionCookie.Value = Session.SessionID;
+
+        //        sessionCookie.Secure = true;
+        //        sessionCookie.Path = "/";
+
+        //        sessionCookie.HttpOnly = true;
+        //        sessionCookie.SameSite = SameSiteMode.None;
+
+
+        //    }
+        //}
 
     }
 }
