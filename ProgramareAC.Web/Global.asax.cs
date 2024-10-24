@@ -58,7 +58,6 @@ namespace ProgramareAC.Web
 
 
                 sessionCookie.Expires = DateTime.Now.AddSeconds(1200);
-                sessionCookie.Secure = true;
 
             }
         }
