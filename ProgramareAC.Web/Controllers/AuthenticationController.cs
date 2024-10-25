@@ -97,7 +97,7 @@ namespace ProgramareAC.Web.Controllers
                 {
                     SamlHelper.SAMLUserData samlUserData = SamlHelper.CreateUserData(nameID, sessionIndex, attributes);
 
-                    FormsAuthentication.SetAuthCookie("MpassAuthentication", true);
+                    FormsAuthentication.SetAuthCookie("MpassAuthentication", false);
 
                     Session.SetLoginTypeKey("MPASS");
 
