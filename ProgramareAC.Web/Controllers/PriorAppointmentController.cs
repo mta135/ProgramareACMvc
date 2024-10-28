@@ -337,7 +337,7 @@ namespace ProgramareAC.Web.Controllers
         public ActionResult Status(int pCerereId)
         {
             CheckStatusModel checkStatusModel = new CheckStatusModel();
-            checkStatusModel.RequestStatus =  client.Get_Status(161)[0].pDescr;
+            checkStatusModel.RequestStatus =  client.Get_Status(pCerereId)[0].pDescr;
 
 
             return View(checkStatusModel);
