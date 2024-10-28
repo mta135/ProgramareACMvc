@@ -42,6 +42,8 @@ namespace ProgramareAC.Models
 
         public string ServiceName { get; set; }
 
+        public string PCerereId { get; set; }
+
         public byte[] Hash { get; set; }
 
         public IEnumerable<SelectListItem> AcCnas { get; set; }

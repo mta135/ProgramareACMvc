@@ -227,6 +227,8 @@ namespace ProgramareAC.Web.Controllers
             string dat = dd[2] + "-" + dd[1] + "-" + dd[0];
             ViewBag.BirthDate = dat;
 
+            ViewBag.PCerereId = form1.PCerereId;
+
             ServiceReference.Row3[] rez = client.set_Time(form1.IDNP, form1.LastName, form1.FirstName, dat, int.Parse(words2[0]), int.Parse(words1[0]), RN, form1.Email, form1.Phone, form1.AudienceSubject);
 
             if (rez[0].Error == 0)

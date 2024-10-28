@@ -119,6 +119,8 @@ namespace ProgramareAC.Models.Repositories.Real
                     string service = (string)reader["ServiceTypeId"] + "|" + (string)reader["ServiceTypeName"];
                     appointment.Service = service;
 
+                    appointment.PCerereId = (string)reader["PCerereId"];
+
                 }
 
                 return appointment;
