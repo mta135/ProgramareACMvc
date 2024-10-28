@@ -3,10 +3,13 @@
     ViewBag.Title = "Status";
 }
 
-<hr />
-<h2>Statutul cererii</h2>
+
+
 
 <div class="container">
+
+    <h2>Verificarea statului cererii</h2>
+    <hr />
 
     @using (Html.BeginForm("Status", "PriorAppointment", FormMethod.Post))
     {
@@ -15,12 +18,21 @@
             <div class="col-sm-9">
 
                 <div class="row">
-                    <label class="col-sm-2">Numarul cererii:</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3">Numarul cererii:</label>
+                    <div class="col-sm-9">
                         @Html.TextBox("RequestNumber", "", new { @class = "form-control", placeholder = "Numarul cererii" })
                     </div>
                 </div>
 
+                <br />
+                <div class="row">
+                    <div class="col-sm-9">
+                        <button type="submit" class="btn btn-primary">Verifica</button>
+                    </div>
+
+                </div>
+
+                <br />
                 <div class="row">
                     <div class="col-sm-10">
                         <p>Result: </p>
@@ -28,8 +40,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-3">
-            </div>
+           
         </div>
     }
 </div>
