@@ -325,22 +325,22 @@ namespace ProgramareAC.Web.Controllers
         [HttpGet]
         public ActionResult Status()
         {
-            var value = client.Get_Status(161);
-            int a = 0;
+            CheckStatusModel checkStatusModel = new CheckStatusModel();
 
-            return View();
+            return View(checkStatusModel);
         }
 
 
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Status(string requestNumber)
+        public ActionResult Status(int pCerereId)
         {
-           
+            CheckStatusModel checkStatusModel = new CheckStatusModel();
+            checkStatusModel.RequestStatus =  client.Get_Status(161)[0].pDescr;
 
 
-            return View();
+            return View(checkStatusModel);
         }
 
 
