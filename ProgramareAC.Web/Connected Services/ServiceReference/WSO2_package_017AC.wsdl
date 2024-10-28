@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://ws.wso2.org/dataservice" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://ws.wso2.org/dataservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  <wsdl:documentation>programare Online la audiența la Aparatul Central al CNAS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </wsdl:documentation>
+  <wsdl:documentation>programare Online la audiența la Aparatul Central al CNAS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </wsdl:documentation>
   <wsdl:types>
     <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ws.wso2.org/dataservice">
       <xs:element name="DataServiceFault">
@@ -42,6 +42,24 @@
           <xs:element minOccurs="0" name="p1" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
+      <xs:element name="Get_Status">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="pCerereId" nillable="true" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Group_getstatus" type="ns0:Group_getstatus" />
+      <xs:complexType name="Group_getstatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Row">
+        <xs:sequence>
+          <xs:element name="pDescr" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
       <xs:element name="get_FreeTime">
         <xs:complexType>
           <xs:sequence>
@@ -53,10 +71,10 @@
       <xs:element name="Group_get_FreeTime" type="ns0:Group_get_FreeTime" />
       <xs:complexType name="Group_get_FreeTime">
         <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row2" />
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="Row">
+      <xs:complexType name="Row2">
         <xs:sequence>
           <xs:element name="orar_id" nillable="true" type="xs:integer" />
           <xs:element name="orar_day" nillable="true" type="xs:string" />
@@ -82,10 +100,10 @@
       <xs:element name="Rez" type="ns0:Rez" />
       <xs:complexType name="Rez">
         <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row2" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row3" />
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="Row2">
+      <xs:complexType name="Row3">
         <xs:sequence>
           <xs:element name="Rezult_Text" nillable="true" type="xs:string" />
           <xs:element name="Error" nillable="true" type="xs:decimal" />
@@ -100,10 +118,10 @@
       <xs:element name="Group_get_RN" type="ns0:Group_get_RN" />
       <xs:complexType name="Group_get_RN">
         <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row3" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row4" />
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="Row3">
+      <xs:complexType name="Row4">
         <xs:sequence>
           <xs:element name="RN" nillable="true" type="xs:decimal" />
           <xs:element name="NAMER" nillable="true" type="xs:string" />
@@ -120,10 +138,10 @@
       <xs:element name="Group_get_Serv" type="ns0:Group_get_Serv" />
       <xs:complexType name="Group_get_Serv">
         <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row4" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Row" type="ns0:Row5" />
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="Row4">
+      <xs:complexType name="Row5">
         <xs:sequence>
           <xs:element name="SERV_ID" nillable="true" type="xs:string" />
           <xs:element name="SERV_NAME_RO" nillable="true" type="xs:string" />
@@ -139,6 +157,12 @@
   </wsdl:message>
   <wsdl:message name="DataServiceFault">
     <wsdl:part name="parameters" element="ns0:DataServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="Get_StatusRequest">
+    <wsdl:part name="parameters" element="ns0:Get_Status" />
+  </wsdl:message>
+  <wsdl:message name="Get_StatusResponse">
+    <wsdl:part name="parameters" element="ns0:Group_getstatus" />
   </wsdl:message>
   <wsdl:message name="get_FreeTimeRequest">
     <wsdl:part name="parameters" element="ns0:get_FreeTime" />
@@ -171,6 +195,12 @@
       <wsdl:output wsaw:Action="urn:proc_testResponse" message="ns0:proc_testResponse" />
       <wsdl:fault wsaw:Action="urn:proc_testDataServiceFault" name="DataServiceFault" message="ns0:DataServiceFault" />
     </wsdl:operation>
+    <wsdl:operation name="Get_Status">
+      <wsdl:documentation />
+      <wsdl:input wsaw:Action="urn:Get_Status" message="ns0:Get_StatusRequest" />
+      <wsdl:output wsaw:Action="urn:Get_StatusResponse" message="ns0:Get_StatusResponse" />
+      <wsdl:fault wsaw:Action="urn:Get_StatusDataServiceFault" name="DataServiceFault" message="ns0:DataServiceFault" />
+    </wsdl:operation>
     <wsdl:operation name="get_FreeTime">
       <wsdl:documentation>call procedure pentru Aparatul Central                                    </wsdl:documentation>
       <wsdl:input wsaw:Action="urn:get_FreeTime" message="ns0:get_FreeTimeRequest" />
@@ -200,6 +230,18 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="proc_test">
       <soap:operation soapAction="urn:proc_test" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataServiceFault">
+        <soap:fault use="literal" name="DataServiceFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Get_Status">
+      <soap:operation soapAction="urn:Get_Status" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -273,6 +315,18 @@
         <soap12:fault use="literal" name="DataServiceFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="Get_Status">
+      <soap12:operation soapAction="urn:Get_Status" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataServiceFault">
+        <soap12:fault use="literal" name="DataServiceFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="get_FreeTime">
       <soap12:operation soapAction="urn:get_FreeTime" style="document" />
       <wsdl:input>
@@ -326,6 +380,15 @@
     <http:binding verb="POST" />
     <wsdl:operation name="proc_test">
       <http:operation location="proc_test" />
+      <wsdl:input>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="parameters" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Get_Status">
+      <http:operation location="Get_Status" />
       <wsdl:input>
         <mime:content part="parameters" type="text/xml" />
       </wsdl:input>

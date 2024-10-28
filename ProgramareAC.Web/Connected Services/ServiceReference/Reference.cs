@@ -186,6 +186,15 @@ namespace ProgramareAC.Web.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="urn:proc_test", ReplyAction="urn:proc_testResponse")]
         System.Threading.Tasks.Task<ProgramareAC.Web.ServiceReference.proc_testResponse> proc_testAsync(ProgramareAC.Web.ServiceReference.proc_testRequest request);
         
+        // CODEGEN: Generating message contract since the wrapper name (Group_getstatus) of message Get_StatusResponse does not match the default value (Get_Status)
+        [System.ServiceModel.OperationContractAttribute(Action="urn:Get_Status", ReplyAction="urn:Get_StatusResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(ProgramareAC.Web.ServiceReference.DataServiceFault), Action="urn:Get_StatusDataServiceFault", Name="DataServiceFault")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        ProgramareAC.Web.ServiceReference.Get_StatusResponse Get_Status(ProgramareAC.Web.ServiceReference.Get_StatusRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="urn:Get_Status", ReplyAction="urn:Get_StatusResponse")]
+        System.Threading.Tasks.Task<ProgramareAC.Web.ServiceReference.Get_StatusResponse> Get_StatusAsync(ProgramareAC.Web.ServiceReference.Get_StatusRequest request);
+        
         // CODEGEN: Generating message contract since the wrapper name (Group_get_FreeTime) of message get_FreeTimeResponse does not match the default value (get_FreeTime)
         [System.ServiceModel.OperationContractAttribute(Action="urn:get_FreeTime", ReplyAction="urn:get_FreeTimeResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(ProgramareAC.Web.ServiceReference.DataServiceFault), Action="urn:get_FreeTimeDataServiceFault", Name="DataServiceFault")]
@@ -258,6 +267,74 @@ namespace ProgramareAC.Web.ServiceReference {
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.wso2.org/dataservice")]
     public partial class Row : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string pDescrField;
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=0)]
+        public string pDescr {
+            get {
+                return this.pDescrField;
+            }
+            set {
+                this.pDescrField = value;
+                this.RaisePropertyChanged("pDescr");
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="Get_Status", WrapperNamespace="http://ws.wso2.org/dataservice", IsWrapped=true)]
+    public partial class Get_StatusRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.wso2.org/dataservice", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> pCerereId;
+        
+        public Get_StatusRequest() {
+        }
+        
+        public Get_StatusRequest(System.Nullable<int> pCerereId) {
+            this.pCerereId = pCerereId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="Group_getstatus", WrapperNamespace="http://ws.wso2.org/dataservice", IsWrapped=true)]
+    public partial class Get_StatusResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.wso2.org/dataservice", Order=0)]
+        [System.Xml.Serialization.XmlElementAttribute("Row")]
+        public ProgramareAC.Web.ServiceReference.Row[] Row;
+        
+        public Get_StatusResponse() {
+        }
+        
+        public Get_StatusResponse(ProgramareAC.Web.ServiceReference.Row[] Row) {
+            this.Row = Row;
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.4084.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.wso2.org/dataservice")]
+    public partial class Row2 : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string orar_idField;
         
@@ -342,12 +419,12 @@ namespace ProgramareAC.Web.ServiceReference {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.wso2.org/dataservice", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute("Row")]
-        public ProgramareAC.Web.ServiceReference.Row[] Row;
+        public ProgramareAC.Web.ServiceReference.Row2[] Row;
         
         public get_FreeTimeResponse() {
         }
         
-        public get_FreeTimeResponse(ProgramareAC.Web.ServiceReference.Row[] Row) {
+        public get_FreeTimeResponse(ProgramareAC.Web.ServiceReference.Row2[] Row) {
             this.Row = Row;
         }
     }
@@ -358,7 +435,7 @@ namespace ProgramareAC.Web.ServiceReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.wso2.org/dataservice")]
-    public partial class Row2 : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Row3 : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string rezult_TextField;
         
@@ -483,12 +560,12 @@ namespace ProgramareAC.Web.ServiceReference {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.wso2.org/dataservice", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute("Row")]
-        public ProgramareAC.Web.ServiceReference.Row2[] Row;
+        public ProgramareAC.Web.ServiceReference.Row3[] Row;
         
         public set_TimeResponse() {
         }
         
-        public set_TimeResponse(ProgramareAC.Web.ServiceReference.Row2[] Row) {
+        public set_TimeResponse(ProgramareAC.Web.ServiceReference.Row3[] Row) {
             this.Row = Row;
         }
     }
@@ -499,7 +576,7 @@ namespace ProgramareAC.Web.ServiceReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.wso2.org/dataservice")]
-    public partial class Row3 : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Row4 : object, System.ComponentModel.INotifyPropertyChanged {
         
         private System.Nullable<decimal> rnField;
         
@@ -571,12 +648,12 @@ namespace ProgramareAC.Web.ServiceReference {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.wso2.org/dataservice", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute("Row")]
-        public ProgramareAC.Web.ServiceReference.Row3[] Row;
+        public ProgramareAC.Web.ServiceReference.Row4[] Row;
         
         public get_RNResponse() {
         }
         
-        public get_RNResponse(ProgramareAC.Web.ServiceReference.Row3[] Row) {
+        public get_RNResponse(ProgramareAC.Web.ServiceReference.Row4[] Row) {
             this.Row = Row;
         }
     }
@@ -587,7 +664,7 @@ namespace ProgramareAC.Web.ServiceReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://ws.wso2.org/dataservice")]
-    public partial class Row4 : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Row5 : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string sERV_IDField;
         
@@ -653,12 +730,12 @@ namespace ProgramareAC.Web.ServiceReference {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://ws.wso2.org/dataservice", Order=0)]
         [System.Xml.Serialization.XmlElementAttribute("Row")]
-        public ProgramareAC.Web.ServiceReference.Row4[] Row;
+        public ProgramareAC.Web.ServiceReference.Row5[] Row;
         
         public get_ServResponse() {
         }
         
-        public get_ServResponse(ProgramareAC.Web.ServiceReference.Row4[] Row) {
+        public get_ServResponse(ProgramareAC.Web.ServiceReference.Row5[] Row) {
             this.Row = Row;
         }
     }
@@ -712,11 +789,34 @@ namespace ProgramareAC.Web.ServiceReference {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        ProgramareAC.Web.ServiceReference.Get_StatusResponse ProgramareAC.Web.ServiceReference.WSO2_package_017ACPortType.Get_Status(ProgramareAC.Web.ServiceReference.Get_StatusRequest request) {
+            return base.Channel.Get_Status(request);
+        }
+        
+        public ProgramareAC.Web.ServiceReference.Row[] Get_Status(System.Nullable<int> pCerereId) {
+            ProgramareAC.Web.ServiceReference.Get_StatusRequest inValue = new ProgramareAC.Web.ServiceReference.Get_StatusRequest();
+            inValue.pCerereId = pCerereId;
+            ProgramareAC.Web.ServiceReference.Get_StatusResponse retVal = ((ProgramareAC.Web.ServiceReference.WSO2_package_017ACPortType)(this)).Get_Status(inValue);
+            return retVal.Row;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<ProgramareAC.Web.ServiceReference.Get_StatusResponse> ProgramareAC.Web.ServiceReference.WSO2_package_017ACPortType.Get_StatusAsync(ProgramareAC.Web.ServiceReference.Get_StatusRequest request) {
+            return base.Channel.Get_StatusAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<ProgramareAC.Web.ServiceReference.Get_StatusResponse> Get_StatusAsync(System.Nullable<int> pCerereId) {
+            ProgramareAC.Web.ServiceReference.Get_StatusRequest inValue = new ProgramareAC.Web.ServiceReference.Get_StatusRequest();
+            inValue.pCerereId = pCerereId;
+            return ((ProgramareAC.Web.ServiceReference.WSO2_package_017ACPortType)(this)).Get_StatusAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         ProgramareAC.Web.ServiceReference.get_FreeTimeResponse ProgramareAC.Web.ServiceReference.WSO2_package_017ACPortType.get_FreeTime(ProgramareAC.Web.ServiceReference.get_FreeTimeRequest request) {
             return base.Channel.get_FreeTime(request);
         }
         
-        public ProgramareAC.Web.ServiceReference.Row[] get_FreeTime(string Branch_code, System.Nullable<decimal> Serv_rf) {
+        public ProgramareAC.Web.ServiceReference.Row2[] get_FreeTime(string Branch_code, System.Nullable<decimal> Serv_rf) {
             ProgramareAC.Web.ServiceReference.get_FreeTimeRequest inValue = new ProgramareAC.Web.ServiceReference.get_FreeTimeRequest();
             inValue.Branch_code = Branch_code;
             inValue.Serv_rf = Serv_rf;
@@ -741,7 +841,7 @@ namespace ProgramareAC.Web.ServiceReference {
             return base.Channel.set_Time(request);
         }
         
-        public ProgramareAC.Web.ServiceReference.Row2[] set_Time(string IDNP, string LastName, string FirstName, string BirthDate, System.Nullable<decimal> Orar_ID, System.Nullable<decimal> Serv_rf, System.Nullable<decimal> RN, string pEmail, string pTel, string pTema) {
+        public ProgramareAC.Web.ServiceReference.Row3[] set_Time(string IDNP, string LastName, string FirstName, string BirthDate, System.Nullable<decimal> Orar_ID, System.Nullable<decimal> Serv_rf, System.Nullable<decimal> RN, string pEmail, string pTel, string pTema) {
             ProgramareAC.Web.ServiceReference.set_TimeRequest inValue = new ProgramareAC.Web.ServiceReference.set_TimeRequest();
             inValue.IDNP = IDNP;
             inValue.LastName = LastName;
@@ -782,7 +882,7 @@ namespace ProgramareAC.Web.ServiceReference {
             return base.Channel.get_RN(request);
         }
         
-        public ProgramareAC.Web.ServiceReference.Row3[] get_RN() {
+        public ProgramareAC.Web.ServiceReference.Row4[] get_RN() {
             ProgramareAC.Web.ServiceReference.get_RNRequest inValue = new ProgramareAC.Web.ServiceReference.get_RNRequest();
             ProgramareAC.Web.ServiceReference.get_RNResponse retVal = ((ProgramareAC.Web.ServiceReference.WSO2_package_017ACPortType)(this)).get_RN(inValue);
             return retVal.Row;
@@ -803,7 +903,7 @@ namespace ProgramareAC.Web.ServiceReference {
             return base.Channel.get_Serv(request);
         }
         
-        public ProgramareAC.Web.ServiceReference.Row4[] get_Serv(System.Nullable<decimal> RN) {
+        public ProgramareAC.Web.ServiceReference.Row5[] get_Serv(System.Nullable<decimal> RN) {
             ProgramareAC.Web.ServiceReference.get_ServRequest inValue = new ProgramareAC.Web.ServiceReference.get_ServRequest();
             inValue.RN = RN;
             ProgramareAC.Web.ServiceReference.get_ServResponse retVal = ((ProgramareAC.Web.ServiceReference.WSO2_package_017ACPortType)(this)).get_Serv(inValue);

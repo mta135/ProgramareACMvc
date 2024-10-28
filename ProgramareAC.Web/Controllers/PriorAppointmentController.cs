@@ -148,17 +148,18 @@ namespace ProgramareAC.Web.Controllers
         public JsonResult GetServiceType(string rn)
         {
             decimal _rn = Convert.ToDecimal(rn);
-  
-            ServiceReference.Row4[] mSrv = client.get_Serv(_rn);
-
-            List<SelectListItem> srv = ConvertToSelectedItems(mSrv);
+ 
+            List<SelectListItem> srv = ConvertToSelectedItems(_rn);
             return Json(srv, JsonRequestBehavior.AllowGet);
         }
 
-        private List<SelectListItem> ConvertToSelectedItems(ServiceReference.Row4[] mSrv)
+        private List<SelectListItem> ConvertToSelectedItems(decimal _rn)
         {
+            ServiceReference.Row5[] mSrv = client.get_Serv(_rn);
+
             List<SelectListItem> selectListItems = new List<SelectListItem>();
-            foreach (ServiceReference.Row4 _srv in mSrv)
+
+            foreach (ServiceReference.Row5 _srv in mSrv)
             {
                 selectListItems.Add(new SelectListItem()
                 {
@@ -177,17 +178,17 @@ namespace ProgramareAC.Web.Controllers
             string rn1 = words[0];
             int serv1 = int.Parse(words1[0]);
 
-            ServiceReference.Row[] arr1 = client.get_FreeTime(rn1, serv1);
+            ServiceReference.Row2[] arr1 = client.get_FreeTime(rn1, serv1);
 
             return Json(arr1, JsonRequestBehavior.AllowGet);
         }
 
         private List<SelectListItem> SetAcCnasItems()
         {
-            ServiceReference.Row3[] arrRN =  client.get_RN();
+            ServiceReference.Row4[] arrRN =  client.get_RN();
 
             List<SelectListItem> selectListItems = new List<SelectListItem>();
-            foreach (ServiceReference.Row3 _arrRN in arrRN)
+            foreach (ServiceReference.Row4 _arrRN in arrRN)
             {
                 selectListItems.Add(new SelectListItem()
                 {
@@ -211,10 +212,10 @@ namespace ProgramareAC.Web.Controllers
             ViewBag.Times1 = words2[0];
             ViewBag.Times2 = words2[1];
 
-            ServiceReference.Row3[] arr1 = client.get_RN();
+            ServiceReference.Row4[] arr1 = client.get_RN();
             var RN = int.Parse(form1.Select1);
 
-            ServiceReference.Row3 el = arr1.First(x => x.RN == RN);
+            ServiceReference.Row4 el = arr1.First(x => x.RN == RN);
             var Adr = el.ADRES;
             ViewBag.Select_2 = Adr;
 
@@ -226,7 +227,7 @@ namespace ProgramareAC.Web.Controllers
             string dat = dd[2] + "-" + dd[1] + "-" + dd[0];
             ViewBag.BirthDate = dat;
 
-            ServiceReference.Row2[] rez = client.set_Time(form1.IDNP, form1.LastName, form1.FirstName, dat, int.Parse(words2[0]), int.Parse(words1[0]), RN, form1.Email, form1.Phone, form1.AudienceSubject);
+            ServiceReference.Row3[] rez = client.set_Time(form1.IDNP, form1.LastName, form1.FirstName, dat, int.Parse(words2[0]), int.Parse(words1[0]), RN, form1.Email, form1.Phone, form1.AudienceSubject);
 
             if (rez[0].Error == 0)
                 return new Tuple<decimal?, string, string>(rez[0].Error, rez[0].pCERERE_ID, "Error : No result.");
@@ -237,10 +238,10 @@ namespace ProgramareAC.Web.Controllers
         private void GetAppointmentServiceName(AppointmentModel form1)
         {
 
-            ServiceReference.Row3[] arr1 = client.get_RN();
+            ServiceReference.Row4[] arr1 = client.get_RN();
             var RN = int.Parse(form1.Select1);
 
-            ServiceReference.Row3 el = arr1.First(x => x.RN == RN);
+            ServiceReference.Row4 el = arr1.First(x => x.RN == RN);
             var Adr = el.ADRES;
             //form1.Address = Adr;
 
@@ -324,6 +325,9 @@ namespace ProgramareAC.Web.Controllers
         [HttpGet]
         public ActionResult Status()
         {
+            var value = client.Get_Status(161);
+            int a = 0;
+
             return View();
         }
 
@@ -331,10 +335,11 @@ namespace ProgramareAC.Web.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Status(string RequestNumber)
+        public ActionResult Status(string requestNumber)
         {
            
-            
+
+
             return View();
         }
 
