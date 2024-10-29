@@ -98,8 +98,8 @@ namespace ProgramareAC.Web.Controllers
 
                 if (oracleTransferStatusCode == 0)
                 {
-
                     string pRequestId = submitAppointmentResult.Item2;
+                    responseResult.PCerereId = pRequestId;
 
                     responseResult.OracleTransferStatusText = submitAppointmentResult.Item3;
                     responseResult.MsRequestId = requestID;
