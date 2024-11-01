@@ -76,21 +76,18 @@ namespace ProgramareAC.DataAccess
         {
             try
             {
-
                 SqlCommand command = CommnadSetSign(requestId, signDate, signerFullName, signerIdnp, sign);
+
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception ex)
             {
-
-                string exception = ex.ToString();
+                WriteLog.Common.Error("SetSign method give an error: ", ex);
             }
             finally
             {
-
                 _db.Dispose();
             }
-
         }
 
         
