@@ -38,38 +38,69 @@ namespace ProgramareAC.Web
         }
 
 
-        // TODO Persisten Session. Verison 3 //This method has been added... Maybe it will work correctly... Must to be tested
-        protected void Application_AcquireRequestState(Object sender, EventArgs e)
+        //TODO Persisten Session. Verison 4 //This method has been added... Maybe it will work correctly... Must to be tested
+        protected void Session_Start(object sender, EventArgs e)
         {
-            WriteLog.Common.Debug("Application_AcquireRequestState. Start");
+            WriteLog.Common.Debug("Session_Start Event. Start");
 
-            // Access sessionStateSection to get session cookie name
             SessionStateSection sessionStateSection = (SessionStateSection)ConfigurationManager.GetSection("system.web/sessionState");
-
             string sessionCookieName = sessionStateSection.CookieName;
 
-            // Get the session cookie from the request
-            HttpCookie sessionCookie = Request.Cookies[sessionCookieName];
+            HttpCookie sessionCookie = new HttpCookie(sessionCookieName);
 
-            if (sessionCookie != null)
-            {
-                WriteLog.Common.Debug("Application_AcquireRequestState: SessionCookie.SameSite: Before: " + sessionCookie.SameSite);
+            sessionCookie.Value = Session.SessionID;
 
-                // Set SameSite and Secure properties directly
-                sessionCookie.SameSite = SameSiteMode.None;
-                sessionCookie.Secure = true;
+            sessionCookie.Secure = true;
 
-                // Add the updated cookie to the response
-                Response.Cookies.Remove(sessionCookieName); // Remove the old cookie
-                Response.Cookies.Add(sessionCookie); // Add the modified cookie
+            sessionCookie.Path = "/";
+            sessionCookie.HttpOnly = true;
 
-                WriteLog.Common.Debug("Application_AcquireRequestState: SessionCookie.SameSite: After: " + sessionCookie.SameSite);
-            }
+            WriteLog.Common.Debug("SameSiteMode Before: " + sessionCookie.SameSite);
+
+            sessionCookie.SameSite = SameSiteMode.None;
+            sessionCookie.Expires = DateTime.Now.AddSeconds(1200);
+
+            WriteLog.Common.Debug("SameSiteMode After: " + sessionCookie.SameSite);
+
+            WriteLog.Common.Debug("Session_Start Event. End");
+
+            Response.Cookies.Add(sessionCookie);
         }
 
 
 
-        //TODO Persisten Session Verison 2 //A fost adaugata aceasta metoda... Poate va lucra corect... Must to be tested
+        //// TODO Persisten Session. Verison 3 //This method has been added... Maybe it will work correctly... Must to be tested
+        //protected void Application_AcquireRequestState(Object sender, EventArgs e)
+        //{
+        //    WriteLog.Common.Debug("Application_AcquireRequestState. Start");
+
+        //    // Access sessionStateSection to get session cookie name
+        //    SessionStateSection sessionStateSection = (SessionStateSection)ConfigurationManager.GetSection("system.web/sessionState");
+
+        //    string sessionCookieName = sessionStateSection.CookieName;
+
+        //    // Get the session cookie from the request
+        //    HttpCookie sessionCookie = Request.Cookies[sessionCookieName];
+
+        //    if (sessionCookie != null)
+        //    {
+        //        WriteLog.Common.Debug("Application_AcquireRequestState: SessionCookie.SameSite: Before: " + sessionCookie.SameSite);
+
+        //        // Set SameSite and Secure properties directly
+        //        sessionCookie.SameSite = SameSiteMode.None;
+        //        sessionCookie.Secure = true;
+
+        //        // Add the updated cookie to the response
+        //        Response.Cookies.Remove(sessionCookieName); // Remove the old cookie
+        //        Response.Cookies.Add(sessionCookie); // Add the modified cookie
+
+        //        WriteLog.Common.Debug("Application_AcquireRequestState: SessionCookie.SameSite: After: " + sessionCookie.SameSite);
+        //    }
+        //}
+
+
+
+        //TODO Persisten Session Verison 2 //A fost adaugata aceasta metoda... Poate va lucra corect... Must to be tested. Parca lucreaza mai corect...
         //protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         //{
         //    WriteLog.Common.Debug("Application_PostAuthenticateRequest. Start");
