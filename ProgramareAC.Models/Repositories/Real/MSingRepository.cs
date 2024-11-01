@@ -55,6 +55,7 @@ namespace ProgramareAC.DataAccess
             }
         }
 
+
         private SqlCommand CommnadSetSign(string requestId, DateTime signDate, string signerFullName, string signerIdnp, byte[] sign)
         {
             SqlCommand command = new SqlCommand("[dbo].[SetSign]", _db.Connection);
@@ -103,7 +104,6 @@ namespace ProgramareAC.DataAccess
 
             return command;
         }
-
 
         public void SetMsignDocumentRequest(int appointmentId, string msignRequest, int appType)
         {
