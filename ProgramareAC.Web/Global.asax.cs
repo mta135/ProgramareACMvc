@@ -60,7 +60,6 @@ namespace ProgramareAC.Web
             sessionCookie.SameSite = SameSiteMode.None;
             sessionCookie.Expires = DateTime.Now.AddSeconds(1200);
 
-            WriteLog.Common.Debug("SameSiteMode After: " + sessionCookie.SameSite);
 
             WriteLog.Common.Debug("Session_Start Event. End");
 
