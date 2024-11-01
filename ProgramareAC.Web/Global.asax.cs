@@ -39,32 +39,32 @@ namespace ProgramareAC.Web
 
 
         //TODO Persisten Session. Verison 4 //This method has been added... Maybe it will work correctly... Must to be tested
-        protected void Session_Start(object sender, EventArgs e)
-        {
-            WriteLog.Common.Debug("Session_Start Event. Start");
+        //protected void Session_Start(object sender, EventArgs e)
+        //{
+        //    WriteLog.Common.Debug("Session_Start Event. Start");
 
-            SessionStateSection sessionStateSection = (SessionStateSection)ConfigurationManager.GetSection("system.web/sessionState");
-            string sessionCookieName = sessionStateSection.CookieName;
+        //    SessionStateSection sessionStateSection = (SessionStateSection)ConfigurationManager.GetSection("system.web/sessionState");
+        //    string sessionCookieName = sessionStateSection.CookieName;
 
-            HttpCookie sessionCookie = new HttpCookie(sessionCookieName);
+        //    HttpCookie sessionCookie = new HttpCookie(sessionCookieName);
 
-            sessionCookie.Value = Session.SessionID;
+        //    sessionCookie.Value = Session.SessionID;
 
-            sessionCookie.Secure = true;
+        //    sessionCookie.Secure = true;
 
-            sessionCookie.Path = "/";
-            sessionCookie.HttpOnly = true;
+        //    sessionCookie.Path = "/";
+        //    sessionCookie.HttpOnly = true;
 
-            WriteLog.Common.Debug("SameSiteMode Before: " + sessionCookie.SameSite);
+        //    WriteLog.Common.Debug("SameSiteMode Before: " + sessionCookie.SameSite);
 
-            sessionCookie.SameSite = SameSiteMode.None;
-            sessionCookie.Expires = DateTime.Now.AddSeconds(1200);
+        //    sessionCookie.SameSite = SameSiteMode.None;
+        //   // sessionCookie.Expires = DateTime.Now.AddSeconds(1200);
 
 
-            WriteLog.Common.Debug("Session_Start Event. End");
+        //    WriteLog.Common.Debug("Session_Start Event. End");
 
-            Response.Cookies.Add(sessionCookie);
-        }
+        //    Response.Cookies.Add(sessionCookie);
+        //}
 
 
 
@@ -100,28 +100,28 @@ namespace ProgramareAC.Web
 
 
         //TODO Persisten Session Verison 2 //A fost adaugata aceasta metoda... Poate va lucra corect... Must to be tested. Parca lucreaza mai corect...
-        //protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
-        //{
-        //    WriteLog.Common.Debug("Application_PostAuthenticateRequest. Start");
+        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        {
+            WriteLog.Common.Debug("Application_PostAuthenticateRequest. Start");
 
-        //    SessionStateSection sessionStateSection = (SessionStateSection)ConfigurationManager.GetSection("system.web/sessionState");
+            SessionStateSection sessionStateSection = (SessionStateSection)ConfigurationManager.GetSection("system.web/sessionState");
 
-        //    string sessionCookieName = sessionStateSection.CookieName;
+            string sessionCookieName = sessionStateSection.CookieName;
 
-        //    if (Request.Cookies[sessionCookieName] != null)
-        //    {
-        //        HttpCookie sessionCookie = Response.Cookies[sessionCookieName];
+            if (Request.Cookies[sessionCookieName] != null)
+            {
+                HttpCookie sessionCookie = Response.Cookies[sessionCookieName];
 
-        //        WriteLog.Common.Debug("Application_PostAuthenticateRequest: SessionCookie.SameSite: Before: " + sessionCookie.SameSite);
+                WriteLog.Common.Debug("Application_PostAuthenticateRequest: SessionCookie.SameSite: Before: " + sessionCookie.SameSite);
 
-        //        sessionCookie.SameSite = SameSiteMode.None;
+                sessionCookie.SameSite = SameSiteMode.None;
 
-        //        WriteLog.Common.Debug("Application_PostAuthenticateRequest: SessionCookie.SameSite: After: " + sessionCookie.SameSite);
+                WriteLog.Common.Debug("Application_PostAuthenticateRequest: SessionCookie.SameSite: After: " + sessionCookie.SameSite);
 
-        //        sessionCookie.Secure = true; 
+                sessionCookie.Secure = true;
 
-        //    }
-        //}
+            }
+        }
 
 
 
