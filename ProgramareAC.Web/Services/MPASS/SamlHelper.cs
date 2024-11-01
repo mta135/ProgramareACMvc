@@ -258,8 +258,8 @@ namespace ProgramareAC.Services.MPASS
                 userData.FirstName = attributes["FirstName"].First();
                 userData.LastName = attributes["LastName"].First();
 
-                //if(attributes.ContainsKey("BirthDate"))
-                //    userData.Birthday = DateTime.Parse(attributes["BirthDate"].First());
+                if (attributes.ContainsKey("BirthDate"))
+                    userData.Birthday = DateTime.Parse(attributes["BirthDate"].First());
 
                 if (attributes.ContainsKey("Language"))
                     userData.Language = attributes["Language"].First();
@@ -293,15 +293,21 @@ namespace ProgramareAC.Services.MPASS
         public class SAMLUserData
         {
             public string SessionIndex { get; set; }
+
             public string IDNP { get; set; }
+
             public string FirstName { get; set; }
+
             public string LastName { get; set; }
-            public DateTime Birthday { get; set; }
+
+            public DateTime? Birthday { get; set; }
+
             public string Email { get; set; }
             /// <summary>
             /// пол 1- муж,2-жен
             /// </summary>
             public byte Gender { get; set; }
+
             public string Language { get; set; }
         }
     }
