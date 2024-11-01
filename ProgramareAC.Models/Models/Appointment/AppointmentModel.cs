@@ -42,16 +42,10 @@ namespace ProgramareAC.Models
 
         public string ServiceName { get; set; }
 
-        public byte[] Hash { get; set; }
+        //public string SignPatternJSON { get; set; }
 
         public IEnumerable<SelectListItem> AcCnas { get; set; }
         public IEnumerable<SelectListItem> TipulServiciului { get; set; } = new List<SelectListItem>();
-
-
-
-        // Fields for MSING
-        public   string SingPattern { get; set; }
-        public string MsignRequestId { get; set; }
 
     }
 }

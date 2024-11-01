@@ -9,7 +9,7 @@ namespace ProgramareAC.Models.Repositories.Abstract
 {
     public interface IAppointmentRepository
     {
-        Task RegisterAppointmenRequest(AppointmentModel appointment);
+        Tuple<int, string> RegisterAppointmenRequest(AppointmentModel appointment);
 
         AppointmentModel GetAppointmentByMsignRequestId(string requestId);
 

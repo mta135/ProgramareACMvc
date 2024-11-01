@@ -9,7 +9,7 @@ namespace ProgramareAC.Services.MSign.Model
     {
         public DateTime SignDate { get; set; }
 
-        public byte[] Hash { get; set; }
+        public string SignPattern { get; set; }
 
         public string SignerFullName { get; set; }
 
@@ -17,7 +17,7 @@ namespace ProgramareAC.Services.MSign.Model
 
         public byte[] Sing { get; set; }
 
-        public string PCerereId { get; set; }
+        public string OrarId { get; set; }
 
     }
 }

@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using ProgramareAC.DataBaseConnection;
+using ProgramareAC.Models.LogHelper;
 using ProgramareAC.Models.Repositories.Abstract;
 using ProgramareAC.Services.MSign.Model;
 
@@ -41,30 +42,37 @@ namespace ProgramareAC.Models.Repositories.Real
 
             command.Parameters.Add("@OrarId", SqlDbType.NVarChar).Value = appointment.Times.Split('|')[0];
             command.Parameters.Add("@RegisterDate", SqlDbType.NVarChar).Value = appointment.Times.Split('|')[1];
-            command.Parameters.Add("@Hash", SqlDbType.VarBinary).Value = appointment.Hash;
 
-            command.Parameters.Add("@SignPattern", SqlDbType.NVarChar).Value = appointment.SingPattern;
-            command.Parameters.Add("@MsingRequestId", SqlDbType.NVarChar).Value = appointment.MsignRequestId;
+            #region Output parameters
+
+            command.Parameters.Add("@AppointmentId", SqlDbType.Int).Direction = ParameterDirection.Output;
+            command.Parameters.Add("@SignPatternJSON", SqlDbType.NVarChar, 256).Direction = ParameterDirection.Output;
+
+            #endregion
 
             return command;
         }
 
-        public async Task RegisterAppointmenRequest(AppointmentModel appointment)
+        public Tuple<int, string> RegisterAppointmenRequest(AppointmentModel appointment)
         {
             try
             {
-
                 SqlCommand command = CommnadRegisterAppointment(appointment);
-                await command.ExecuteNonQueryAsync();
+
+                command.ExecuteNonQuery();
+
+                int appointmentId = Convert.ToInt32(command.Parameters["@AppointmentId"].Value);
+                string signPatternJSON = Convert.ToString(command.Parameters["@SignPatternJSON"].Value);
+
+                return new Tuple<int, string>(appointmentId, signPatternJSON);
             }
             catch (Exception ex)
             {
-
-                string exception = ex.ToString();
+                WriteLog.Common.Error("RegisterAppointmenRequest method give an error: ", ex);
+                return null;
             }
             finally
             {
-
                 _db.Dispose();
             }
         }
@@ -84,7 +92,6 @@ namespace ProgramareAC.Models.Repositories.Real
         {
             try
             {
-
                 SqlCommand command = CommandGetAppointmentByMsignRequestId(requestId);
                 command.ExecuteNonQuery();
 
@@ -114,11 +121,10 @@ namespace ProgramareAC.Models.Repositories.Real
                     string times = (string)reader["OrarId"] + "|" + (string)reader["RegisterDate"];
                     appointment.Times = times;
 
-                    appointment.Hash = (byte[])reader["Hash"];
+                    //appointment.SignPatternJSON = (string)reader["SignPatternJSON"];
 
                     string service = (string)reader["ServiceTypeId"] + "|" + (string)reader["ServiceTypeName"];
                     appointment.Service = service;
-
                 }
 
                 return appointment;
@@ -160,7 +166,7 @@ namespace ProgramareAC.Models.Repositories.Real
                 if (reader.Read())
                 {
 
-                    signResult.Hash = (byte[])reader["Hash"];
+                    signResult.SignPattern = (string)reader["SignPatternJSON"];
 
                     signResult.SignDate = (DateTime)reader["SignDate"];
 
@@ -170,7 +176,7 @@ namespace ProgramareAC.Models.Repositories.Real
 
                     signResult.Sing = (byte[])reader["Sign"];
 
-                    signResult.PCerereId = (string)reader["PCerereId"];
+                    signResult.OrarId = (string)reader["OrarId"];
                 }
 
                 return signResult;

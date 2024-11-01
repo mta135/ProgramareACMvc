@@ -6,6 +6,7 @@ using System.Text;
 using ProgramareAC.DataAccess;
 using ProgramareAC.Models;
 using ProgramareAC.Models.LogHelper;
+using ProgramareAC.Models.Models.Enums;
 using ProgramareAC.Models.Repositories.Abstract;
 using ProgramareAC.Models.Repositories.Real;
 
@@ -32,11 +33,13 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
             {
                 string resultRequestId = null;
 
-                SignContentFields content = ConvertToSignContentFields(appointmentModel);
+                Tuple<int, string> registerResult = _appointmentRepository.RegisterAppointmenRequest(appointmentModel);
 
-                string signPattern = ConverToSignContentFields(content);
+                int appointmentId = registerResult.Item1;
 
-                byte[] propertiesForSign = CreateSha1Hash(signPattern);
+                string signPattern = registerResult.Item2;
+
+                byte[] propertiesForSign = SetSh1Hash(signPattern);
 
                 string correlationId = appointmentModel.Times.Split('|')[0];
 
@@ -49,8 +52,7 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
 
                 SignContent signContent = new SignContent
                 {
-
-                    CorrelationID = correlationId, //Guid.NewGuid().ToString("N"),
+                    CorrelationID = correlationId, 
                     MultipleSignatures = false,
                     Content = propertiesForSign
                 };
@@ -65,11 +67,7 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
 
                 resultRequestId = client.PostSignRequest(signRequest);
 
-                appointmentModel.SingPattern = signPattern;
-                appointmentModel.MsignRequestId = resultRequestId;
-                appointmentModel.Hash = propertiesForSign;
-
-                _appointmentRepository.RegisterAppointmenRequest(appointmentModel);
+                _mSignRepository.SetMsignDocumentRequest(appointmentId, resultRequestId, AppTypeEnum.ProgramareAc);
 
                 return resultRequestId;
             }
@@ -130,9 +128,9 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
             SignPackResult signPack = _appointmentRepository.GetSignPackResult(requestId);
             SignValidationResult result = new SignValidationResult();
 
-            byte[] hash = signPack.Hash;
+            byte[] hash = SetSh1Hash(signPack.SignPattern); 
             byte[] sign = signPack.Sing;
-            string correlationId = signPack.PCerereId;
+            string correlationId = signPack.OrarId;
 
             if (sign == null || hash == null)
                 throw new Exception("Could not load sign for verify - parameter empty, DB empty. Task<SignValidationResult> VerifyMSignSignature(...)");
@@ -186,7 +184,7 @@ namespace ProgramareAC.Services.MSign.MSignCommunication
             return result;
         }
 
-        private static byte[] CreateSha1Hash(string input)
+        private static byte[] SetSh1Hash(string input)
         {
             using (SHA1 sha1 = SHA1.Create())
             {
