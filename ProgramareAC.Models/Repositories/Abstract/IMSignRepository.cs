@@ -9,5 +9,7 @@ namespace ProgramareAC.DataAccess
         void UpdateSignedDocument(string requestId, int responseStatus, string responseMessage);
 
         Task SetSign(string requestId, DateTime signDate, string signerFullName, string signerIdnp, byte[] sign);
+
+        void SetMsignDocumentRequest(int appointmentId, string msignRequest, int appType);
     }
 }

@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using ProgramareAC.DataBaseConnection;
 using ProgramareAC.Models;
+using ProgramareAC.Models.LogHelper;
 using ProgramareAC.Models.Models.Msign;
 
 namespace ProgramareAC.DataAccess
@@ -87,6 +88,39 @@ namespace ProgramareAC.DataAccess
             finally
             {
 
+                _db.Dispose();
+            }
+
+        }
+
+        
+        private SqlCommand CommandSetMsignDocumentRequest(int appointmentId, string msignRequest, int appType)
+        {
+            SqlCommand command = new SqlCommand("[dbo].[SetMsignDocumentRequest]", _db.Connection);
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.Add("@AppointmentId", SqlDbType.Int).Value = appointmentId;
+
+            command.Parameters.Add("@MsingRequestId", SqlDbType.NVarChar).Value = msignRequest;
+            command.Parameters.Add("@ProgramareAC", SqlDbType.TinyInt).Value = appType;
+
+            return command;
+        }
+
+
+        public void SetMsignDocumentRequest(int appointmentId, string msignRequest, int appType)
+        {
+            try
+            {
+                SqlCommand command = CommandSetMsignDocumentRequest(appointmentId, msignRequest, appType);
+                command.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                WriteLog.Common.Error("SetMsignDocumentRequest method give an error: ", ex);
+            }
+            finally
+            {
                 _db.Dispose();
             }
 
