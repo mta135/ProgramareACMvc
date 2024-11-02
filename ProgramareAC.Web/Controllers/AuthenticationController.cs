@@ -229,6 +229,18 @@ namespace ProgramareAC.Web.Controllers
 
         #endregion 
 
+
+
+
+
+        [HttpPost]
+        public ActionResult EndSession()
+        {
+            WriteLog.Common.Debug("Close page at: " + DateTime.Now);
+
+            return Json(new { success = true });
+        }
+
     }
 }
 
