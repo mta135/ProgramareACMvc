@@ -236,7 +236,14 @@ namespace ProgramareAC.Web.Controllers
         [HttpPost]
         public ActionResult EndSession()
         {
+
             WriteLog.Common.Debug("Close page at: " + DateTime.Now);
+
+
+            if (User.Identity.IsAuthenticated)
+            {
+                
+            }
 
             return Json(new { success = true });
         }
