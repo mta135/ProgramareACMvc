@@ -143,15 +143,12 @@
 
 <script type="text/javascript">
 
-    window.addEventListener('beforeunload', function (e) {
 
-        // Send an AJAX request to the server to end the session
+
+    window.onbeforeunload = function (e) {
+
         navigator.sendBeacon('@Url.Action("EndSession", "Authentication")', {});
 
-        // Optionally, show a confirmation dialog (if needed)
-        const confirmationMessage = 'Are you sure you want to leave?';
-        e.returnValue = confirmationMessage; // For modern browsers
-
-        return confirmationMessage; // For older browsers
-    });
+        return null;
+    };
 </script>
