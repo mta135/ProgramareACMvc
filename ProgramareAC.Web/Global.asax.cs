@@ -99,31 +99,52 @@ namespace ProgramareAC.Web
 
 
 
-        //TODO Persisten Session Verison 2 //A fost adaugata aceasta metoda... Poate va lucra corect... Must to be tested. Parca lucreaza mai corect...
-        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        ////TODO Persisten Session Verison 2 //A fost adaugata aceasta metoda... Poate va lucra corect... Must to be tested. Parca lucreaza mai corect...
+        //protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        //{
+        //    WriteLog.Common.Debug("Application_PostAuthenticateRequest. Start");
+
+        //    SessionStateSection sessionStateSection = (SessionStateSection)ConfigurationManager.GetSection("system.web/sessionState");
+
+        //    string sessionCookieName = sessionStateSection.CookieName;
+
+        //    if (Request.Cookies[sessionCookieName] != null)
+        //    {
+        //        HttpCookie sessionCookie = Response.Cookies[sessionCookieName];
+
+        //        WriteLog.Common.Debug("Application_PostAuthenticateRequest: SessionCookie.SameSite: Before: " + sessionCookie.SameSite);
+
+        //        sessionCookie.SameSite = SameSiteMode.None;
+
+        //        WriteLog.Common.Debug("Application_PostAuthenticateRequest: SessionCookie.SameSite: After: " + sessionCookie.SameSite);
+
+        //        sessionCookie.Secure = true;
+
+        //    }
+        //}
+
+        protected void Application_BeginRequest()
         {
-            WriteLog.Common.Debug("Application_PostAuthenticateRequest. Start");
+            // Check if the session cookie exists
+            var sessionCookie = HttpContext.Current.Request.Cookies["ASP.NET_SessionId"];
 
-            SessionStateSection sessionStateSection = (SessionStateSection)ConfigurationManager.GetSection("system.web/sessionState");
-
-            string sessionCookieName = sessionStateSection.CookieName;
-
-            if (Request.Cookies[sessionCookieName] != null)
+            if (sessionCookie != null)
             {
-                HttpCookie sessionCookie = Response.Cookies[sessionCookieName];
-
-                WriteLog.Common.Debug("Application_PostAuthenticateRequest: SessionCookie.SameSite: Before: " + sessionCookie.SameSite);
-
+                // Update attributes for the existing session cookie
                 sessionCookie.SameSite = SameSiteMode.None;
-
-                WriteLog.Common.Debug("Application_PostAuthenticateRequest: SessionCookie.SameSite: After: " + sessionCookie.SameSite);
-
-                sessionCookie.Secure = true;
-
+                sessionCookie.Secure = true; // Requires HTTPS
+            }
+            else
+            {
+                // If it doesn't exist, create a new session cookie with desired attributes
+                var newSessionCookie = new HttpCookie("ASP.NET_SessionId")
+                {
+                    SameSite = SameSiteMode.None,
+                    Secure = true // Requires HTTPS
+                };
+                HttpContext.Current.Response.Cookies.Add(newSessionCookie);
             }
         }
-
-
 
 
 
