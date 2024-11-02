@@ -166,7 +166,7 @@ namespace ProgramareAC.Web.Controllers
 
             WriteLog.Common.Debug("Method: MPASSLogoutResponse. ExpectedUrl: " + expectedUrl);
 
-            WriteLog.Common.Debug("Method: MPASSLogoutResponse. _RequestIDSessionKey: " + _RequestIDSessionKey);
+            WriteLog.Common.Debug("Method: MPASSLogoutResponse. RequestIDSessionKey: " + _RequestIDSessionKey);
 
             SamlHelper.LoadAndVerifyLogoutResponse(samlResponse, expectedUrl, TimeSpan.Parse(MPASSConfiguration.SamlMessageTimeout), _RequestIDSessionKey, out ns, out statusResultText);
 
