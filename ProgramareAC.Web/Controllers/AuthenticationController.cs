@@ -72,14 +72,14 @@ namespace ProgramareAC.Web.Controllers
 
                 var expectedUrl = string.Format("{0}/{2}/{1}", RequestBaseUrl(), "MPASSLoginResponse", "Authentication");
 
-                string session_RequestIDSessionKey = Session.GetRequestIDSessionKey();
+                string RequestIDSessionKey = Session.GetRequestIDSessionKey();
 
                 WriteLog.Common.Info("Method: MPASSLoginResponse. ExpectedUrl: " + expectedUrl);
 
-                WriteLog.Common.Info("Method: MPASSLoginResponse. Session_RequestIDSessionKey: " + session_RequestIDSessionKey);
+                WriteLog.Common.Info("Method: MPASSLoginResponse. RequestIDSessionKey: " + RequestIDSessionKey);
 
                 SamlHelper.LoadAndVerifyLoginResponse(samlResponse, expectedUrl, TimeSpan.Parse(MPASSConfiguration.SamlMessageTimeout),
-                    session_RequestIDSessionKey, MPASSConfiguration.Issuer, out ns, out sessionIndex, out nameID, out attributes, out bool isAuthenticationCancelled);
+                    RequestIDSessionKey, MPASSConfiguration.Issuer, out ns, out sessionIndex, out nameID, out attributes, out bool isAuthenticationCancelled);
 
                 if (isAuthenticationCancelled)
                 {
