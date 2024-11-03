@@ -315,9 +315,14 @@ namespace ProgramareAC.Web.Controllers
             ResponseResultPack model = new ResponseResultPack();
             model.MsRequestId = msRequestId;
 
+
+            return RedirectToAction("ResponseResult", new { errorCode = 0});
+
             var value = _appointmentRepository.GetSignPackResult(msRequestId);
 
             AppointmentModel form1 = _appointmentRepository.GetAppointmentByMsignRequestId(msRequestId);
+
+
 
             return View("Result", model);
         }
