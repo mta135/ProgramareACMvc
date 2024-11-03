@@ -123,28 +123,28 @@ namespace ProgramareAC.Web
         //    }
         //}
 
-        protected void Application_BeginRequest()
-        {
-            // Check if the session cookie exists
-            var sessionCookie = HttpContext.Current.Request.Cookies["ASP.NET_SessionId"];
+        //protected void Application_BeginRequest()
+        //{
+        //    // Check if the session cookie exists
+        //    var sessionCookie = HttpContext.Current.Request.Cookies["ASP.NET_SessionId"];
 
-            if (sessionCookie != null)
-            {
-                // Update attributes for the existing session cookie
-                sessionCookie.SameSite = SameSiteMode.None;
-                sessionCookie.Secure = true; // Requires HTTPS
-            }
-            else
-            {
-                // If it doesn't exist, create a new session cookie with desired attributes
-                var newSessionCookie = new HttpCookie("ASP.NET_SessionId")
-                {
-                    SameSite = SameSiteMode.None,
-                    Secure = true // Requires HTTPS
-                };
-                HttpContext.Current.Response.Cookies.Add(newSessionCookie);
-            }
-        }
+        //    if (sessionCookie != null)
+        //    {
+        //        // Update attributes for the existing session cookie
+        //        sessionCookie.SameSite = SameSiteMode.None;
+        //        sessionCookie.Secure = true; // Requires HTTPS
+        //    }
+        //    else
+        //    {
+        //        // If it doesn't exist, create a new session cookie with desired attributes
+        //        var newSessionCookie = new HttpCookie("ASP.NET_SessionId")
+        //        {
+        //            SameSite = SameSiteMode.None,
+        //            Secure = true // Requires HTTPS
+        //        };
+        //        HttpContext.Current.Response.Cookies.Add(newSessionCookie);
+        //    }
+        //}
 
 
 

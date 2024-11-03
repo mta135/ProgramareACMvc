@@ -15,6 +15,20 @@ namespace ProgramareAC.Web.Controllers
 {
     public class AuthenticationController : Controller
     {
+
+        private const string SessionSamlUserKey = "SessionSamlUser";
+
+        private const string RequestIDSessionKey = "SAML.RequestID";
+
+        private const string SessionIndexSessionKey = "SAML.SessionIndex";
+
+        private const string LoginTypeKey = "SessionLoginType";
+
+        private const string LogutRequestIDSessionKey = "SAML.Logout.RequestID";
+
+
+
+
         public ActionResult MpassAuthentication()
         {
             WriteLog.Common.Info("AuthenticationController/MpassAuthentication");
@@ -40,7 +54,8 @@ namespace ProgramareAC.Web.Controllers
             var postBackUrl = string.Format("{0}/{2}/{1}", RequestBaseUrl(), "MPASSLoginResponse", "Authentication");
             var authnRequestID = "_" + Guid.NewGuid();
 
-            Session.SetRequestIDSessionKey(authnRequestID);
+            // Session.SetRequestIDSessionKey(authnRequestID);
+            SetString(RequestIDSessionKey, authnRequestID);
 
             WriteLog.Common.Info("Method MPASSLogin. PostBackUrl: " + postBackUrl);
 
@@ -74,14 +89,14 @@ namespace ProgramareAC.Web.Controllers
 
                 var expectedUrl = string.Format("{0}/{2}/{1}", RequestBaseUrl(), "MPASSLoginResponse", "Authentication");
 
-                string RequestIDSessionKey = Session.GetRequestIDSessionKey();
+                string _RequestIDSessionKey = GetString(RequestIDSessionKey); //Session.GetRequestIDSessionKey();
 
                 WriteLog.Common.Info("Method: MPASSLoginResponse. ExpectedUrl: " + expectedUrl);
 
-                WriteLog.Common.Info("Method: MPASSLoginResponse. RequestIDSessionKey: " + RequestIDSessionKey);
+                WriteLog.Common.Info("Method: MPASSLoginResponse. RequestIDSessionKey: " + _RequestIDSessionKey);
 
                 SamlHelper.LoadAndVerifyLoginResponse(samlResponse, expectedUrl, TimeSpan.Parse(MPASSConfiguration.SamlMessageTimeout),
-                    RequestIDSessionKey, MPASSConfiguration.Issuer, out ns, out sessionIndex, out nameID, out attributes, out bool isAuthenticationCancelled);
+                    _RequestIDSessionKey, MPASSConfiguration.Issuer, out ns, out sessionIndex, out nameID, out attributes, out bool isAuthenticationCancelled);
 
                 if (isAuthenticationCancelled)
                 {
@@ -91,16 +106,18 @@ namespace ProgramareAC.Web.Controllers
                         TransferStatusText = "A aparut o eroare la formarea autentificarii. Este nevoie de re-autentificare."
                     };
 
-                    WriteLog.Common.Info("MPASSLoginResponse. RequestIDSessionKey: " + RequestIDSessionKey + "; SessionIndex: " + sessionIndex + "; IsAuthenticationCancelled: " + isAuthenticationCancelled + "; RelayState: " + relayState);
+                    WriteLog.Common.Info("MPASSLoginResponse. RequestIDSessionKey: " + _RequestIDSessionKey + "; SessionIndex: " + sessionIndex + "; IsAuthenticationCancelled: " + isAuthenticationCancelled + "; RelayState: " + relayState);
 
                     return View("Error", responseResult);
                 }
 
                 // remove RequestID from session to stop replay attacks
-                Session.ClearRequestIDSessionKey();
+                //Session.ClearRequestIDSessionKey();
+                ClearCookie(RequestIDSessionKey);
 
                 // save SessionIndex in session
-                Session.SetSessionIndexSessionKey(sessionIndex);
+                //Session.SetSessionIndexSessionKey(sessionIndex);
+                SetString(SessionIndexSessionKey, sessionIndex);
 
                 if (!string.IsNullOrEmpty(nameID))
                 {
@@ -117,7 +134,9 @@ namespace ProgramareAC.Web.Controllers
 
                 else
                 {
-                    Session.ClearRequestIDSessionKey();
+                    //Session.ClearRequestIDSessionKey();
+                    ClearCookie(RequestIDSessionKey);
+
                     Session.SetSessionIndexSessionKey(sessionIndex);
 
                     ViewBag.MpassInfo = "Nu s-au gasit inregistrari in MPASS pentru Dvs.";
@@ -136,13 +155,15 @@ namespace ProgramareAC.Web.Controllers
             // generate LogoutRequest ID
             var logoutRequestID = "_" + Guid.NewGuid();
 
-            Session.SetRequestIDSessionKey(logoutRequestID);
+            //Session.SetRequestIDSessionKey(logoutRequestID);
+            SetString(LogutRequestIDSessionKey, logoutRequestID);
+
 
             WriteLog.Common.Debug("Method MPASSLogout. LogoutRequestId: " + logoutRequestID);
 
             AppointmentModel appointment = ParseSamlUserData.ParseTo(new AppointmentModel());
 
-            string _sessionIndexSessionKey = Session.GetSessionIndexSessionKey();
+            string _sessionIndexSessionKey = GetString(SessionIndexSessionKey); //Session.GetSessionIndexSessionKey();
 
             WriteLog.Common.Debug("Method MPASSLogout. SessionIndexSessionKey: " + _sessionIndexSessionKey);
 
@@ -168,7 +189,7 @@ namespace ProgramareAC.Web.Controllers
 
             var expectedUrl = string.Format("{0}/{2}/{1}", RequestBaseUrl(), "MPASSLogoutResponse", "Authentication");
 
-            string _RequestIDSessionKey = Session.GetRequestIDSessionKey();
+            string _RequestIDSessionKey = GetString(LogutRequestIDSessionKey); //Session.GetRequestIDSessionKey();
 
             WriteLog.Common.Debug("Method: MPASSLogoutResponse. ExpectedUrl: " + expectedUrl);
 
@@ -178,7 +199,9 @@ namespace ProgramareAC.Web.Controllers
 
             Session.ClearLoginTypeKey();
 
-            Session.ClearRequestIDSessionKey();
+            //Session.ClearRequestIDSessionKey();
+            ClearCookie(LogutRequestIDSessionKey);
+
 
             Session.ClearSessionUser();
 
@@ -235,10 +258,6 @@ namespace ProgramareAC.Web.Controllers
 
         #endregion 
 
-
-
-
-
         [HttpPost]
         public ActionResult EndSession()
         {
@@ -253,6 +272,56 @@ namespace ProgramareAC.Web.Controllers
 
             return Json(new { success = true });
         }
+
+
+
+
+
+
+
+        #region Cookies
+
+        private void SetString(string key, string value)
+        {
+            // Create the cookie
+            HttpCookie sameSiteCookie = new HttpCookie(key);
+
+            // Set a value for the cookieSite none.
+            // Note this will also require you to be running on HTTPS
+            sameSiteCookie.Value = value;
+
+            // Set the secure flag, which Chrome's changes will require for Same
+            sameSiteCookie.Secure = true;
+
+            // Set the cookie to HTTP only which is good practice unless you really do need
+            // to access it client side in scripts.
+            sameSiteCookie.HttpOnly = true;
+            sameSiteCookie.Expires = DateTime.Now.AddSeconds(1200);
+
+            // Add the SameSite attribute, this will emit the attribute with a value of none.
+            // To not emit the attribute at all set the SameSite property to -1.
+            sameSiteCookie.SameSite = SameSiteMode.None;
+
+            // Add the cookie to the response cookie collection
+            Response.Cookies.Add(sameSiteCookie);
+        }
+
+        private string GetString(string key)
+        {
+            HttpCookie sameSiteCookie = Request.Cookies[key];
+            string name = sameSiteCookie != null ? sameSiteCookie.Value : null;
+
+            return name;
+        }
+
+
+        private void ClearCookie(string key)
+        {
+            HttpCookie sameSiteCookie = Request.Cookies[key];
+            sameSiteCookie.Expires = DateTime.Now.AddDays(-1);
+        }
+
+        #endregion
 
     }
 }
