@@ -74,6 +74,7 @@
     <Compile Include="Models\Appointment\CheckStatusModel.cs" />
     <Compile Include="Models\Appointment\ResponseResultPack.cs" />
     <Compile Include="Models\Enums\AppTypeEnum.cs" />
+    <Compile Include="Models\Enums\TransferStatuseCodeEnum.cs" />
     <Compile Include="Models\Enums\SignStatusEnum.cs" />
     <Compile Include="Models\ImportModels\ConvertToModel.cs" />
     <Compile Include="Models\Msign\SignContentFields.cs" />
