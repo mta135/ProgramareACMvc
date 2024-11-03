@@ -273,12 +273,6 @@ namespace ProgramareAC.Web.Controllers
             return Json(new { success = true });
         }
 
-
-
-
-
-
-
         #region Cookies
 
         private void SetString(string key, string value)
@@ -313,7 +307,6 @@ namespace ProgramareAC.Web.Controllers
 
             return name;
         }
-
 
         private void ClearCookie(string key)
         {
