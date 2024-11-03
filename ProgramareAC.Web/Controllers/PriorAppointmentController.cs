@@ -345,6 +345,15 @@ namespace ProgramareAC.Web.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult ResponseResult(int errorCode)
+        {
+            ResponseResultPack responseResult = new ResponseResultPack();
+
+
+            return View();
+        }
+
 
         #region Write Logs
 
