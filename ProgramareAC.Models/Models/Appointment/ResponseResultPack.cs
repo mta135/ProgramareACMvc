@@ -11,6 +11,8 @@
         public bool IsOracleResponse { get; set; } = true;
 
         public string PCerereId { get; set; }
+
+        public int TransferStatusCode { get; set; }
              
     }
 }
