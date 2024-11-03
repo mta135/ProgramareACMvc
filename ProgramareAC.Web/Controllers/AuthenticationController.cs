@@ -88,10 +88,10 @@ namespace ProgramareAC.Web.Controllers
                     ResponseResultPack responseResult = new ResponseResultPack
                     {
                         TransferStatusCode = TransferStatuseCodeEnum.MpassAuthenticationError,
-                        TransferStatusText = "A apraut o eroare la foramrea autentificarii. Este nevoie de re-autentificare."
+                        TransferStatusText = "A aparut o eroare la formarea autentificarii. Este nevoie de re-autentificare."
                     };
 
-                    WriteLog.Common.Info("MPASSLoginResponse. RequestIDSessionKey: " + RequestIDSessionKey + "; SessionIndex: " + sessionIndex + "; IsAuthenticationCancelled: " + isAuthenticationCancelled);
+                    WriteLog.Common.Info("MPASSLoginResponse. RequestIDSessionKey: " + RequestIDSessionKey + "; SessionIndex: " + sessionIndex + "; IsAuthenticationCancelled: " + isAuthenticationCancelled + "; RelayState: " + relayState);
 
                     return View("Error", responseResult);
                 }
@@ -120,7 +120,7 @@ namespace ProgramareAC.Web.Controllers
                     Session.ClearRequestIDSessionKey();
                     Session.SetSessionIndexSessionKey(sessionIndex);
 
-                    ViewBag.MpassInfo = "Pentru Dvs. nu s-au gasit inregistrari in MPASS.";
+                    ViewBag.MpassInfo = "Nu s-au gasit inregistrari in MPASS pentru Dvs.";
 
                     return View("MpassInfo");
                 }
