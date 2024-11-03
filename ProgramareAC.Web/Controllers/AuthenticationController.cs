@@ -1,5 +1,7 @@
 ﻿using ProgramareAC.Models;
 using ProgramareAC.Models.LogHelper;
+using ProgramareAC.Models.Models.Appointment;
+using ProgramareAC.Models.Models.Enums;
 using ProgramareAC.Services.MPASS;
 using System;
 using System.Collections.Generic;
@@ -83,8 +85,15 @@ namespace ProgramareAC.Web.Controllers
 
                 if (isAuthenticationCancelled)
                 {
-                    // string text = "A apraut o eroare la foramrea autentificarii..."
-                    return RedirectToAction("Login");
+                    ResponseResultPack responseResult = new ResponseResultPack
+                    {
+                        TransferStatusCode = TransferStatuseCodeEnum.MpassAuthenticationError,
+                        TransferStatusText = "A apraut o eroare la foramrea autentificarii. Este nevoie de autentificare"
+                    };
+
+                    WriteLog.Common.Info("MPASSLoginResponse. RequestIDSessionKey: " + RequestIDSessionKey + "; IsAuthenticationCancelled: " + isAuthenticationCancelled);
+
+                    return View("Error", responseResult);
                 }
 
                 // remove RequestID from session to stop replay attacks

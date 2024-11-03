@@ -14,6 +14,6 @@ namespace ProgramareAC.Models.Models.Enums
         
         public static int MsignError = 2;
         
-        public static int MpassError = 3;
+        public static int MpassAuthenticationError = 3;
     }
 }

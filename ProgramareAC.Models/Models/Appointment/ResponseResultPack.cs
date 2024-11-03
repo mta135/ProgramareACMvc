@@ -6,9 +6,7 @@
 
         public string MsRequestId { get; set; }
 
-        public string OracleTransferStatusText { get; set; }
-
-        public bool IsOracleResponse { get; set; } = true;
+        public string TransferStatusText { get; set; }
 
         public string PCerereId { get; set; }
 

@@ -1,13 +1,66 @@
-﻿<!DOCTYPE html>
+﻿
+@using ProgramareAC.Models.Models.Enums
+
+@model ProgramareAC.Models.Models.Appointment.ResponseResultPack
+
+@{ 
+    bool HasError(int transferCode)
+    {
+        if (Model.TransferStatusCode == TransferStatuseCodeEnum.OracleTransferError || Model.TransferStatusCode == TransferStatuseCodeEnum.MsignError || Model.TransferStatusCode == TransferStatuseCodeEnum.MpassAuthenticationError)
+            return true;
+
+        return false;
+    }
+}
+
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Error</title>
 </head>
 <body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
+
+    @if (HasError(Model.TransferStatusCode))
+    {
+
+        <div style="margin-top:20px">
+            <div class="container">
+
+                <p>A aparut urmatoarea eroare la procesarea datelor: @(Model.TransferStatusText)</p>
+                <p>Pentru a beneficia de progrmare, este nevoie de autentificare</p>
+                <hr />
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <img src="~/Content/img/mpass.png" alt="mpass" />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("MPASSLogin", "Authentication")'">Autentificare prin MPASS</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    else
+    {
+        <hgroup>
+            <h1>Error.</h1>
+            <h2>An error occurred while processing your request.</h2>
+        </hgroup>
+    }
+
+
 </body>
 </html>

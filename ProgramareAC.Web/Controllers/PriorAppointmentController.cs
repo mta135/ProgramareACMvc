@@ -102,7 +102,7 @@ namespace ProgramareAC.Web.Controllers
                     string pRequestId = submitAppointmentResult.Item2;
                     responseResult.PCerereId = pRequestId;
 
-                    responseResult.OracleTransferStatusText = submitAppointmentResult.Item3;
+                    responseResult.TransferStatusText = submitAppointmentResult.Item3;
                     responseResult.MsRequestId = requestID;
 
                     _appointmentRepository.SetAppointmentTransferStatus(requestID, pRequestId, oracleTransferStatusCode);
@@ -112,10 +112,13 @@ namespace ProgramareAC.Web.Controllers
 
                 else
                 {
-                    responseResult.OracleTransferStatusText = submitAppointmentResult.Item3;
-                    responseResult.MsingInfo = "Pentru a putea beneficia de programare, este nevoie de semnarea datelor...";
+                    responseResult.TransferStatusText = submitAppointmentResult.Item3;
+
+                    responseResult.TransferStatusCode = TransferStatuseCodeEnum.OracleTransferError;
 
                     _appointmentRepository.SetAppointmentTransferStatus(requestID, null, oracleTransferStatusCode);
+
+                    SetTransferStatusErrorLog(requestID, oracleTransferStatusCode, responseResult.TransferStatusText);
 
                     view = "Error";
                 }
@@ -125,8 +128,11 @@ namespace ProgramareAC.Web.Controllers
 
             view = "Error";
 
-            responseResult.IsOracleResponse = false;
-            responseResult.MsingInfo = "MSIGN. A Aparut o problema la semnarea datelor. Este nevoie de mai semnat odata.";
+            responseResult.TransferStatusCode = TransferStatuseCodeEnum.MsignError;
+
+            SetMsingStatusErrorLog(requestID, mSingAcceptedResult, relayState);
+
+            responseResult.TransferStatusText = "MSIGN. A Aparut o problema la semnarea datelor. Este nevoie de mai semnat odata.";
 
             return View(view, responseResult);
         }
@@ -316,15 +322,16 @@ namespace ProgramareAC.Web.Controllers
             model.MsRequestId = msRequestId;
 
 
-            return RedirectToAction("ResponseResult", new { errorCode = 0});
+            model.TransferStatusCode = TransferStatuseCodeEnum.OracleTransferError;
+            model.TransferStatusText = "Nu sunt suficente date pentru a procesa datele... incarcati mia tiruiz";
 
-            var value = _appointmentRepository.GetSignPackResult(msRequestId);
+            //    var value = _appointmentRepository.GetSignPackResult(msRequestId);
 
-            AppointmentModel form1 = _appointmentRepository.GetAppointmentByMsignRequestId(msRequestId);
+            //AppointmentModel form1 = _appointmentRepository.GetAppointmentByMsignRequestId(msRequestId);
 
 
 
-            return View("Result", model);
+            return View("Error", model);
         }
 
         [AllowAnonymous]
