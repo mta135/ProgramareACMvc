@@ -1,4 +1,5 @@
 ﻿using ProgramareAC.Models;
+using ProgramareAC.Models.LogHelper;
 using ProgramareAC.Models.Models.Appointment;
 using ProgramareAC.Models.Models.Enums;
 using ProgramareAC.Models.Repositories.Abstract;
@@ -345,6 +346,19 @@ namespace ProgramareAC.Web.Controllers
 
 
 
+        #region Write Logs
+
+        private void SetTransferStatusErrorLog(string rquestId, decimal? tranferStatusCode, string transferStatusText)
+        {
+            WriteLog.Common.Error("MSIGN RequestId: " + rquestId + "; OracleTransferStatusCode: " + tranferStatusCode + "; OracleTransferStatusText: " + transferStatusText);
+        }
+
+        private void SetMsingStatusErrorLog(string requestID, int mSingAcceptedResult, string relayState)
+        {
+            WriteLog.Common.Error("MSIGN RequestId: " + requestID + "; MSIGN Accepted Result Status: " + mSingAcceptedResult + "; MSIGN RelayState: " + relayState);
+        }
+
+        #endregion
 
     }
 }
