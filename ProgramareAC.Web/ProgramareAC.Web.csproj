@@ -238,6 +238,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Connected Services\ServiceReference\WSO2_package_017AC.wsdl" />
     <Content Include="log4net.config" />
+    <Content Include="Ghidul utilizatorului.pdf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
