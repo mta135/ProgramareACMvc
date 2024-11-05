@@ -13,6 +13,8 @@ namespace ProgramareAC.Services.MPASS
 
         private const string LoginTypeKey = "SessionLoginType";
 
+        private const string LogutRequestIDSessionKey = "SAML.Logout.RequestID";
+
 
         #region SamlUserData
 
@@ -86,6 +88,27 @@ namespace ProgramareAC.Services.MPASS
         public static void ClearLoginTypeKey(this HttpSessionStateBase session)
         {
             session.Remove(LoginTypeKey);
+        }
+
+        #endregion
+
+
+
+        #region LogoutRequestIdSessionKey
+
+        public static void SetLogoutRequestIdSessionKey(this HttpSessionStateBase session, string authnRequestID)
+        {
+            session[LogutRequestIDSessionKey] = authnRequestID;
+        }
+
+        public static string GetLogoutRequestIdSessionKey(this HttpSessionStateBase session)
+        {
+            return session[LogutRequestIDSessionKey] as string;
+        }
+
+        public static void ClearLogoutRequestIdSessionKey(this HttpSessionStateBase session)
+        {
+            session.Remove(LogutRequestIDSessionKey);
         }
 
         #endregion

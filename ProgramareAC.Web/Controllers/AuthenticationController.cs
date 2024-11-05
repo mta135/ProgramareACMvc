@@ -54,8 +54,8 @@ namespace ProgramareAC.Web.Controllers
             var postBackUrl = string.Format("{0}/{2}/{1}", RequestBaseUrl(), "MPASSLoginResponse", "Authentication");
             var authnRequestID = "_" + Guid.NewGuid();
 
-            // Session.SetRequestIDSessionKey(authnRequestID);
-            SetString(RequestIDSessionKey, authnRequestID);
+             Session.SetRequestIDSessionKey(authnRequestID);
+           // SetString(RequestIDSessionKey, authnRequestID);
 
             WriteLog.Common.Info("Method MPASSLogin. PostBackUrl: " + postBackUrl);
 
@@ -89,7 +89,7 @@ namespace ProgramareAC.Web.Controllers
 
                 var expectedUrl = string.Format("{0}/{2}/{1}", RequestBaseUrl(), "MPASSLoginResponse", "Authentication");
 
-                string _RequestIDSessionKey = GetString(RequestIDSessionKey); //Session.GetRequestIDSessionKey();
+                string _RequestIDSessionKey = Session.GetRequestIDSessionKey(); //GetString(RequestIDSessionKey);
 
                 WriteLog.Common.Info("Method: MPASSLoginResponse. ExpectedUrl: " + expectedUrl);
 
@@ -112,12 +112,12 @@ namespace ProgramareAC.Web.Controllers
                 }
 
                 // remove RequestID from session to stop replay attacks
-                //Session.ClearRequestIDSessionKey();
-                ClearCookie(RequestIDSessionKey);
+                Session.ClearRequestIDSessionKey();
+                //ClearCookie(RequestIDSessionKey);
 
                 // save SessionIndex in session
-                //Session.SetSessionIndexSessionKey(sessionIndex);
-                SetString(SessionIndexSessionKey, sessionIndex);
+                Session.SetSessionIndexSessionKey(sessionIndex);
+                //SetString(SessionIndexSessionKey, sessionIndex);
 
                 if (!string.IsNullOrEmpty(nameID))
                 {
@@ -134,8 +134,8 @@ namespace ProgramareAC.Web.Controllers
 
                 else
                 {
-                    //Session.ClearRequestIDSessionKey();
-                    ClearCookie(RequestIDSessionKey);
+                    Session.ClearRequestIDSessionKey();
+                    //ClearCookie(RequestIDSessionKey);
 
                     Session.SetSessionIndexSessionKey(sessionIndex);
 
@@ -156,14 +156,16 @@ namespace ProgramareAC.Web.Controllers
             var logoutRequestID = "_" + Guid.NewGuid();
 
             //Session.SetRequestIDSessionKey(logoutRequestID);
-            SetString(LogutRequestIDSessionKey, logoutRequestID);
+            Session.SetLogoutRequestIdSessionKey(logoutRequestID);
+
+            //SetString(LogutRequestIDSessionKey, logoutRequestID);
 
 
             WriteLog.Common.Debug("Method MPASSLogout. LogoutRequestId: " + logoutRequestID);
 
             AppointmentModel appointment = ParseSamlUserData.ParseTo(new AppointmentModel());
 
-            string _sessionIndexSessionKey = GetString(SessionIndexSessionKey); //Session.GetSessionIndexSessionKey();
+            string _sessionIndexSessionKey = Session.GetSessionIndexSessionKey(); // GetString(SessionIndexSessionKey);
 
             WriteLog.Common.Debug("Method MPASSLogout. SessionIndexSessionKey: " + _sessionIndexSessionKey);
 
@@ -189,18 +191,21 @@ namespace ProgramareAC.Web.Controllers
 
             var expectedUrl = string.Format("{0}/{2}/{1}", RequestBaseUrl(), "MPASSLogoutResponse", "Authentication");
 
-            string _RequestIDSessionKey = GetString(LogutRequestIDSessionKey); //Session.GetRequestIDSessionKey();
+            string _RequestIDSessionKey = Session.GetLogoutRequestIdSessionKey(); //Session.GetRequestIDSessionKey(); //GetString(LogutRequestIDSessionKey); 
 
             WriteLog.Common.Debug("Method: MPASSLogoutResponse. ExpectedUrl: " + expectedUrl);
 
-            WriteLog.Common.Debug("Method: MPASSLogoutResponse. RequestIDSessionKey: " + _RequestIDSessionKey);
+            WriteLog.Common.Debug("Method: MPASSLogoutResponse. LogoutRequestId: " + _RequestIDSessionKey);
 
             SamlHelper.LoadAndVerifyLogoutResponse(samlResponse, expectedUrl, TimeSpan.Parse(MPASSConfiguration.SamlMessageTimeout), _RequestIDSessionKey, out ns, out statusResultText);
 
             Session.ClearLoginTypeKey();
 
-            //Session.ClearRequestIDSessionKey();
-            ClearCookie(LogutRequestIDSessionKey);
+            Session.ClearRequestIDSessionKey();
+            // ClearCookie(LogutRequestIDSessionKey);
+
+            Session.ClearLogoutRequestIdSessionKey();
+            
 
 
             Session.ClearSessionUser();
@@ -262,7 +267,7 @@ namespace ProgramareAC.Web.Controllers
         public ActionResult EndSession()
         {
 
-            WriteLog.Common.Debug("Close page at: " + DateTime.Now);
+            
 
 
             if (User.Identity.IsAuthenticated)

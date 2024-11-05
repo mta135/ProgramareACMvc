@@ -47,6 +47,7 @@ namespace ProgramareAC.Web.Controllers
             appointmentModel.IDNP = parsedAppointmentModel.IDNP;
             appointmentModel.FirstName = parsedAppointmentModel.FirstName;
             appointmentModel.LastName = parsedAppointmentModel.LastName;
+            appointmentModel.Date = parsedAppointmentModel.Date;
 
             return View(appointmentModel);
         }

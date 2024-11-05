@@ -37,6 +37,23 @@ namespace ProgramareAC.Web
             MPASSConfiguration.InitializeSettingsMVC5();
         }
 
+        //TODO Persisten Session. Verison 5
+        protected void Application_PreSendRequestHeaders()
+        {
+            HttpContext.Current.Response.Headers.Remove("X-AspNet-Version");
+            HttpContext.Current.Response.Headers.Remove("X-AspNetMvc-Version");
+
+            // Iterate over the Response.Cookies collection by index
+            for (int i = 0; i < Response.Cookies.Count; i++)
+            {
+                HttpCookie cookie = Response.Cookies[i];
+                if (cookie != null)
+                {
+                    cookie.SameSite = SameSiteMode.None; // Set SameSite to None
+                    cookie.Secure = true; // Make sure Secure is enabled
+                }
+            }
+        }
 
         //TODO Persisten Session. Verison 4 //This method has been added... Maybe it will work correctly... Must to be tested
         //protected void Session_Start(object sender, EventArgs e)
