@@ -362,7 +362,7 @@ namespace ProgramareAC.Web.Controllers
 
 
         [HttpGet]
-        public ActionResult ResponseResult(int errorCode)
+        public ActionResult DocumentResponseResult(int errorCode)
         {
             ResponseResultPack responseResult = new ResponseResultPack();
 
