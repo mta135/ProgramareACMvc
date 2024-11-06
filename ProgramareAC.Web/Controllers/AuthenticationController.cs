@@ -155,11 +155,9 @@ namespace ProgramareAC.Web.Controllers
             // generate LogoutRequest ID
             var logoutRequestID = "_" + Guid.NewGuid();
 
-            //Session.SetRequestIDSessionKey(logoutRequestID);
             Session.SetLogoutRequestIdSessionKey(logoutRequestID);
 
             //SetString(LogutRequestIDSessionKey, logoutRequestID);
-
 
             WriteLog.Common.Debug("Method MPASSLogout. LogoutRequestId: " + logoutRequestID);
 
@@ -204,7 +202,6 @@ namespace ProgramareAC.Web.Controllers
                 Session.ClearLoginTypeKey();
 
                 Session.ClearRequestIDSessionKey();
-                // ClearCookie(LogutRequestIDSessionKey);
 
                 Session.ClearLogoutRequestIdSessionKey();
 
@@ -213,12 +210,13 @@ namespace ProgramareAC.Web.Controllers
                 //FormsAuthentication.SignOut();
                 //return RedirectToAction("MpassAuthentication");
 
-                return new EmptyResult();
+                return RedirectToAction("DocumentResponseResult", "PriorAppointment");
             }
             catch (Exception ex)
             {
                 WriteLog.Common.Error("Method: MPASSLogoutResponse give an exception: ", ex);
-                return new EmptyResult();
+
+                return RedirectToAction("DocumentResponseResult", "PriorAppointment");
             }
             finally
             {
@@ -251,8 +249,6 @@ namespace ProgramareAC.Web.Controllers
                 string _sessionIndexSessionKey = Session.GetSessionIndexSessionKey();
 
                 SamlHelper.LoadAndVerifyLogoutRequest(samlRequest, postUrl, TimeSpan.Parse(MPASSConfiguration.SamlMessageTimeout), appointment.IDNP, _sessionIndexSessionKey, out logoutRequestID);
-
-                //await SignOutAndCleanUser();
 
                 // build LogoutResponse
                 var logoutResponseID = "_" + Guid.NewGuid();

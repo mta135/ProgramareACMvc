@@ -88,57 +88,9 @@ namespace ProgramareAC.Web.Controllers
         [HttpPost]
         public ActionResult MSignDocumentResponse(string requestID, string relayState)
         {
-            string view;
+            Session["MSignDocumentResponse"] = new Tuple<string, string>(requestID, relayState);
 
-            int mSingAcceptedResult = _mSignCommunicationService.MSignRequestCheckAndAccepted(requestID);
-
-            ResponseResultPack responseResult = new ResponseResultPack();
-
-            if (mSingAcceptedResult == (int)SignStatusEnum.Success)
-            {
-                Tuple<decimal?, string, string> submitAppointmentResult = SubmitAppointment(requestID);
-                decimal? oracleTransferStatusCode = submitAppointmentResult.Item1;
-
-                if (oracleTransferStatusCode == 0)
-                {
-                    string pRequestId = submitAppointmentResult.Item2;
-                    responseResult.PCerereId = pRequestId;
-
-                    responseResult.TransferStatusText = submitAppointmentResult.Item3;
-                    responseResult.MsRequestId = requestID;
-
-                    _appointmentRepository.SetAppointmentTransferStatus(requestID, pRequestId, oracleTransferStatusCode);
-
-                    view = "Result";
-                }
-
-                else
-                {
-                    responseResult.TransferStatusText = submitAppointmentResult.Item3;
-
-                    responseResult.TransferStatusCode = TransferStatuseCodeEnum.OracleTransferError;
-
-                    _appointmentRepository.SetAppointmentTransferStatus(requestID, null, oracleTransferStatusCode);
-
-                    SetTransferStatusErrorLog(requestID, oracleTransferStatusCode, responseResult.TransferStatusText);
-
-                    view = "Error";
-                }
-
-                LogoutFromMPASS();
-                return View(view, responseResult);
-            }
-
-            view = "Error";
-
-            responseResult.TransferStatusCode = TransferStatuseCodeEnum.MsignError;
-
-            SetMsingStatusErrorLog(requestID, mSingAcceptedResult, relayState);
-
-            responseResult.TransferStatusText = "MSIGN. A Aparut o problema la semnarea datelor. Este nevoie de mai semnat odata.";
-
-            LogoutFromMPASS();
-            return View(view, responseResult);
+            return RedirectToAction("MPASSLogout", "Authentication");
         }
 
         [HttpGet]
@@ -211,7 +163,7 @@ namespace ProgramareAC.Web.Controllers
             return selectListItems;
         }
 
-        public Tuple<decimal?, string, string> SubmitAppointment(string msRequestId) // va trebui de folosit aceasta metoda pe viitor...
+        public Tuple<decimal?, string, string> SubmitAppointment(string msRequestId) 
         {
             AppointmentModel form1 = _appointmentRepository.GetAppointmentByMsignRequestId(msRequestId);
 
@@ -260,63 +212,6 @@ namespace ProgramareAC.Web.Controllers
             form1.ServiceName = el.NAMER;
         }
 
-        //public ActionResult SubmitAppointment(AppointmentModel form1)
-        //{
-        //    ProgramareAC.ServiceReference2.WSO2_package_017ACPortTypeClient client = GetClient();
-
-        //    ViewBag.idnp = form1.IDNP;
-        //    ViewBag.LastName = form1.LastName;
-        //    ViewBag.FirstName = form1.FirstName;
-
-        //    string[] words2 = form1.Times.Split('|');
-        //    ViewBag.Times1 = words2[0];
-        //    ViewBag.Times2 = words2[1];
-
-        //    ProgramareAC.ServiceReference2.Row3[] arr1 = client.get_RN();
-        //    var RN = int.Parse(form1.Select1);
-
-        //    ProgramareAC.ServiceReference2.Row3 el = arr1.First(x => x.RN == RN);
-        //    var Adr = el.ADRES;
-        //    ViewBag.Select_2 = Adr;
-
-        //    string[] words1 = form1.Service.Split('|');
-        //    ViewBag.Service1 = words1[0];
-        //    ViewBag.Service2 = words1[1];
-
-        //    string[] dd = form1.Date.Split('-');
-        //    string dat = dd[2] + "-" + dd[1] + "-" + dd[0];
-        //    ViewBag.BirthDate = dat;
-
-
-
-
-
-        //    ProgramareAC.ServiceReference2.Row2[] rez = client.set_Time(form1.IDNP, form1.LastName, form1.FirstName, dat, int.Parse(words2[0]), int.Parse(words1[0]), RN, form1.Email, form1.Phone, form1.AudienceSubject);
-        //    if (rez[0].Error == 0) {
-        //        ViewBag.responce = "Error : No result.";
-        //        return View("Result");
-        //    }
-        //    else {
-        //        ViewBag.responce = rez[0].Rezult_Text;
-        //        return View("Error");
-        //    }
-
-        //}
-
-
-        //private List<SelectListItem> GetServiceTypeOnPost(ServiceReference.Row4[] mSrv)
-        //{
-        //    List<SelectListItem> selectListItems = new List<SelectListItem>();
-        //    foreach (ServiceReference.Row4 _srv in mSrv) {
-        //        selectListItems.Add(new SelectListItem() {
-        //            Text = _srv.SERV_NAME_RO,
-        //            Value = _srv.SERV_ID + '|' + _srv.SERV_NAME_RO
-        //        });
-        //    }
-
-        //    return selectListItems;
-        //}
-
         [HttpGet]
         public ActionResult Index() // for testing
         {
@@ -347,8 +242,6 @@ namespace ProgramareAC.Web.Controllers
             return View(checkStatusModel);
         }
 
-
-
         [AllowAnonymous]
         [HttpPost]
         public ActionResult Status(int pCerereId)
@@ -360,25 +253,65 @@ namespace ProgramareAC.Web.Controllers
             return View(checkStatusModel);
         }
 
-
         [HttpGet]
-        public ActionResult DocumentResponseResult(int errorCode)
+        public ActionResult DocumentResponseResult()
         {
+            Tuple<string, string> mSignDocumentResponse = (Tuple<string, string>)Session["MSignDocumentResponse"];
+
+            string requestID = mSignDocumentResponse.Item1;
+
+            string relayState = mSignDocumentResponse.Item2;
+
+            string view;
+
+            int mSingAcceptedResult = _mSignCommunicationService.MSignRequestCheckAndAccepted(requestID);
+
             ResponseResultPack responseResult = new ResponseResultPack();
 
+            if (mSingAcceptedResult == (int)SignStatusEnum.Success)
+            {
+                Tuple<decimal?, string, string> submitAppointmentResult = SubmitAppointment(requestID);
+                decimal? oracleTransferStatusCode = submitAppointmentResult.Item1;
 
-            return View();
+                if (oracleTransferStatusCode == 0)
+                {
+                    string pRequestId = submitAppointmentResult.Item2;
+                    responseResult.PCerereId = pRequestId;
+
+                    responseResult.TransferStatusText = submitAppointmentResult.Item3;
+                    responseResult.MsRequestId = requestID;
+
+                    _appointmentRepository.SetAppointmentTransferStatus(requestID, pRequestId, oracleTransferStatusCode);
+
+                    view = "Result";
+                }
+
+                else
+                {
+                    responseResult.TransferStatusText = submitAppointmentResult.Item3;
+
+                    responseResult.TransferStatusCode = TransferStatuseCodeEnum.OracleTransferError;
+
+                    _appointmentRepository.SetAppointmentTransferStatus(requestID, null, oracleTransferStatusCode);
+
+                    SetTransferStatusErrorLog(requestID, oracleTransferStatusCode, responseResult.TransferStatusText);
+
+                    view = "Error";
+                }
+
+                return View(view, responseResult);
+            }
+
+            view = "Error";
+
+            responseResult.TransferStatusCode = TransferStatuseCodeEnum.MsignError;
+
+            SetMsingStatusErrorLog(requestID, mSingAcceptedResult, relayState);
+
+            responseResult.TransferStatusText = "MSIGN. A Aparut o problema la semnarea datelor. Este nevoie de mai semnat odata.";
+
+            return View(view, responseResult);
         }
-
-
-        private void LogoutFromMPASS()
-        {
-            Thread.Sleep(1000);
-
-            AuthenticationController authentication = new AuthenticationController();
-            authentication.MPASSLogout("");
-        }
-
 
         #region Write Logs
 
