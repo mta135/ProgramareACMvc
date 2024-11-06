@@ -190,7 +190,7 @@ namespace ProgramareAC.Web.Controllers
             string dat = dd[2] + "-" + dd[1] + "-" + dd[0];
             ViewBag.BirthDate = dat;
 
-            ServiceReference.Row3[] rez = client.set_Time(form1.IDNP, form1.FirstName, form1.LastName, dat, int.Parse(words2[0]), int.Parse(words1[0]), RN, form1.Email, form1.Phone, form1.AudienceSubject);
+            ServiceReference.Row3[] rez = client.set_Time(form1.IDNP, form1.LastName, form1.FirstName, dat, int.Parse(words2[0]), int.Parse(words1[0]), RN, form1.Email, form1.Phone, form1.AudienceSubject);
 
             if (rez[0].Error == 0)
                 return new Tuple<decimal?, string, string>(rez[0].Error, rez[0].pCERERE_ID, "Error : No result.");
