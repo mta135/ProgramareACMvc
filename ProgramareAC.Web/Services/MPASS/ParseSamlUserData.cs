@@ -13,9 +13,10 @@ namespace ProgramareAC.Services.MPASS
 
             SAMLUserData samlUserData = session.GetSessionUser();
 
-            if (samlUserData != null) {
-
-                if (typeof(T) == typeof(AppointmentModel)) {
+            if (samlUserData != null)
+            {
+                if (typeof(T) == typeof(AppointmentModel))
+                {
                     return (T)(object)ParseToAppointmentModel(samlUserData);
                 }
             }
@@ -33,7 +34,7 @@ namespace ProgramareAC.Services.MPASS
             appointmentModel.LastName = samlUserData.LastName;
 
             if (samlUserData.Birthday != null)
-                appointmentModel.Date = Convert.ToString(samlUserData.Birthday);
+                appointmentModel.Date = samlUserData.Birthday?.ToString("dd-MM-yyyy"); //Convert.ToString(samlUserData.Birthday);
 
             return appointmentModel;
         }
