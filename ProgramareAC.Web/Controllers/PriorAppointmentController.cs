@@ -233,7 +233,6 @@ namespace ProgramareAC.Web.Controllers
             return View("Error", model);
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult Status()
         {
@@ -241,13 +240,12 @@ namespace ProgramareAC.Web.Controllers
 
             return View(checkStatusModel);
         }
-
-        [AllowAnonymous]
+       
         [HttpPost]
-        public ActionResult Status(int pCerereId)
+        public ActionResult Status(CheckStatusModel model)
         {
             CheckStatusModel checkStatusModel = new CheckStatusModel();
-            checkStatusModel.RequestStatus =  client.Get_Status(pCerereId)[0].pDescr;
+            checkStatusModel.RequestStatus =  client.Get_Status(model.pCerereId)[0].pDescr;
 
 
             return View(checkStatusModel);

@@ -17,7 +17,8 @@
                 <div class="row">
                     <label class="col-sm-3">Numarul cererii:</label>
                     <div class="col-sm-9">
-                       @Html.TextBox("pCerereId", "", new { @class = "form-control", placeholder = "Numarul cererii" })                       
+                        @Html.TextBoxFor(x => x.pCerereId, new { @class = "form-control", placeholder = "Numarul cererii" })
+                        @Html.ValidationMessageFor(x => x.pCerereId)
                     </div>
                 </div>
 
