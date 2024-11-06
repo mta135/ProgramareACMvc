@@ -186,33 +186,48 @@ namespace ProgramareAC.Web.Controllers
         [HttpPost]
         public ActionResult MPASSLogoutResponse(string samlResponse, string relayState)
         {
-            XmlNamespaceManager ns;//Неясная хрень, зато понятно в примере где находимся.
-            bool statusResultText = false;
+            try
+            {
+                XmlNamespaceManager ns;//Неясная хрень, зато понятно в примере где находимся.
+                bool statusResultText = false;
 
-            var expectedUrl = string.Format("{0}/{2}/{1}", RequestBaseUrl(), "MPASSLogoutResponse", "Authentication");
+                var expectedUrl = string.Format("{0}/{2}/{1}", RequestBaseUrl(), "MPASSLogoutResponse", "Authentication");
 
-            string _RequestIDSessionKey = Session.GetLogoutRequestIdSessionKey(); //Session.GetRequestIDSessionKey(); //GetString(LogutRequestIDSessionKey); 
+                string _RequestIDSessionKey = Session.GetLogoutRequestIdSessionKey(); //Session.GetRequestIDSessionKey(); //GetString(LogutRequestIDSessionKey); 
 
-            WriteLog.Common.Debug("Method: MPASSLogoutResponse. ExpectedUrl: " + expectedUrl);
+                WriteLog.Common.Debug("Method: MPASSLogoutResponse. ExpectedUrl: " + expectedUrl);
 
-            WriteLog.Common.Debug("Method: MPASSLogoutResponse. LogoutRequestId: " + _RequestIDSessionKey);
+                WriteLog.Common.Debug("Method: MPASSLogoutResponse. LogoutRequestId: " + _RequestIDSessionKey);
 
-            SamlHelper.LoadAndVerifyLogoutResponse(samlResponse, expectedUrl, TimeSpan.Parse(MPASSConfiguration.SamlMessageTimeout), _RequestIDSessionKey, out ns, out statusResultText);
+                SamlHelper.LoadAndVerifyLogoutResponse(samlResponse, expectedUrl, TimeSpan.Parse(MPASSConfiguration.SamlMessageTimeout), _RequestIDSessionKey, out ns, out statusResultText);
 
-            Session.ClearLoginTypeKey();
+                Session.ClearLoginTypeKey();
 
-            Session.ClearRequestIDSessionKey();
-            // ClearCookie(LogutRequestIDSessionKey);
+                Session.ClearRequestIDSessionKey();
+                // ClearCookie(LogutRequestIDSessionKey);
 
-            Session.ClearLogoutRequestIdSessionKey();
-            
+                Session.ClearLogoutRequestIdSessionKey();
 
+                Session.ClearSessionUser();
 
-            Session.ClearSessionUser();
+                //FormsAuthentication.SignOut();
+                //return RedirectToAction("MpassAuthentication");
 
-            FormsAuthentication.SignOut();
+                return new EmptyResult();
+            }
+            catch (Exception ex)
+            {
+                WriteLog.Common.Error("Method: MPASSLogoutResponse give an exception: ", ex);
+                return new EmptyResult();
+            }
+            finally
+            {
+                Session.ClearLoginTypeKey();
+                Session.ClearRequestIDSessionKey();
 
-            return RedirectToAction("MpassAuthentication");
+                Session.ClearLogoutRequestIdSessionKey();
+                Session.ClearSessionUser();
+            }
         }
 
         /// <summary>

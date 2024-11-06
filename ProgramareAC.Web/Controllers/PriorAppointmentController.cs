@@ -10,12 +10,13 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
 namespace ProgramareAC.Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class PriorAppointmentController : Controller
     {
         readonly ServiceReference.WSO2_package_017ACPortTypeClient client;
@@ -124,6 +125,7 @@ namespace ProgramareAC.Web.Controllers
                     view = "Error";
                 }
 
+                LogoutFromMPASS();
                 return View(view, responseResult);
             }
 
@@ -135,6 +137,7 @@ namespace ProgramareAC.Web.Controllers
 
             responseResult.TransferStatusText = "MSIGN. A Aparut o problema la semnarea datelor. Este nevoie de mai semnat odata.";
 
+            LogoutFromMPASS();
             return View(view, responseResult);
         }
 
@@ -365,6 +368,15 @@ namespace ProgramareAC.Web.Controllers
 
 
             return View();
+        }
+
+
+        private void LogoutFromMPASS()
+        {
+            Thread.Sleep(1000);
+
+            AuthenticationController authentication = new AuthenticationController();
+            authentication.MPASSLogout("");
         }
 
 
