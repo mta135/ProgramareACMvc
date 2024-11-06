@@ -263,21 +263,6 @@ namespace ProgramareAC.Web.Controllers
 
         #endregion 
 
-        [HttpPost]
-        public ActionResult EndSession()
-        {
-
-            
-
-
-            if (User.Identity.IsAuthenticated)
-            {
-                
-            }
-
-            return Json(new { success = true });
-        }
-
         #region Cookies
 
         private void SetString(string key, string value)

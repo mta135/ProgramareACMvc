@@ -141,14 +141,11 @@
 
 
 
-<script type="text/javascript">
-
-
-
+@*<script type="text/javascript">
     window.onbeforeunload = function (e) {
 
         navigator.sendBeacon('@Url.Action("EndSession", "Authentication")', {});
 
         return null;
     };
-</script>
+</script>*@
