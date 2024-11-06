@@ -233,6 +233,7 @@ namespace ProgramareAC.Web.Controllers
             return View("Error", model);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult Status()
         {
@@ -240,7 +241,8 @@ namespace ProgramareAC.Web.Controllers
 
             return View(checkStatusModel);
         }
-       
+
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Status(CheckStatusModel model)
         {
